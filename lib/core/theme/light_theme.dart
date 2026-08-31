@@ -11,6 +11,7 @@ ThemeData lightTheme(BuildContext context) {
     // ),
     primaryColor: LightColorConstant.primaryColor,
     secondaryHeaderColor: LightColorConstant.secondaryHeaderColor,
+    primaryColorLight: LightColorConstant.buttonTextColor,
     scaffoldBackgroundColor: LightColorConstant.scaffoldBackgroundColor,
     // appBarTheme: AppBarTheme(
     //   backgroundColor: Color(0xFFF6F7F9),
@@ -73,10 +74,14 @@ ThemeData lightTheme(BuildContext context) {
         color: LightColorConstant.textThirdColor,
         fontWeight: FontWeight.w700,
       ),
+      titleSmall: TextStyle(
+        fontSize: 16,
+        color: LightColorConstant.primaryColor,
+        fontWeight: FontWeight.w400,
+      ),
       labelMedium: TextStyle(
         fontSize: 16,
         color: LightColorConstant.primaryMediumGreyColor,
-
         fontWeight: FontWeight.w400,
       ),
       labelLarge: TextStyle(
