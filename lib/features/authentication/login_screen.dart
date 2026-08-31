@@ -1,11 +1,36 @@
+import 'dart:developer';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/core/widgets/custom_text_form_field.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
+  late final TapGestureRecognizer _signInTapGestureRecognizer;
+
+  @override
+  void initState() {
+    super.initState();
+    _signInTapGestureRecognizer = TapGestureRecognizer()..onTap = () {
+      log("Pressed");
+    };
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _signInTapGestureRecognizer.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +74,33 @@ class LoginScreen extends StatelessWidget {
                   hintText: "*************",
                   title: "Password",
                   isObscureText: true,
+                ),
+                SizedBox(height: 20),
+                FilledButton(
+                    onPressed: () {},
+                    child: Text("Sign In"),
+                ),
+                SizedBox(height: 24),
+                Center(
+                  child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Don't have an account ?",
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          TextSpan(
+                              text: "  Sign Up",
+                              style: Theme
+                                  .of(context)
+                                  .textTheme
+                                  .labelSmall
+                                  ?.copyWith(color: Theme.of(context).primaryColor,),
+                              recognizer: _signInTapGestureRecognizer,
+                          )
+                        ],
+                      ),
+                  ),
                 ),
               ],
             ),
