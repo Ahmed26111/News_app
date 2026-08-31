@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/core/widgets/custom_text_form_field.dart';
+import 'package:news_app/features/authentication/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _signInTapGestureRecognizer = TapGestureRecognizer()..onTap = () {
-      log("Pressed");
+      Navigator.push(context,MaterialPageRoute(builder: (context) => RegisterScreen()));
     };
   }
 
