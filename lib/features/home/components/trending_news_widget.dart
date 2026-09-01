@@ -54,25 +54,36 @@ class TrendingNewsWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 20),
                         child: CircularProgressIndicator(color: Theme.of(context).primaryColorLight,),
                       ),
-                      RequestStatusEnum.eLoaded => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: SizedBox(
-                          height: 140,
-                          child: ListView.separated(
-                            itemCount: controller.newsEveryThingArticles.length,
-                            separatorBuilder: (_, _) => SizedBox(width: 12),
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (BuildContext context, int index) {
-                              final article = controller.newsEveryThingArticles[index];
-                              return Container(
-                                width: 235,
-                                height: 140,
+                      RequestStatusEnum.eLoaded => SizedBox(
+                        height: 140,
+                        child: ListView.separated(
+                          padding: const EdgeInsets.only(left: 16),
+                          itemCount: controller.newsEveryThingArticles.length,
+                          separatorBuilder: (_, _) => SizedBox(width: 12),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            final article = controller.newsEveryThingArticles[index];
+                            return Container(
+                              width: 235,
+                              height: 140,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: (article.urlToImage != "")
+                                      ? NetworkImage(article.urlToImage)
+                                      : AssetImage("assets/images/background_home_image.png"),
+                                  fit: BoxFit.fill,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Container(
                                 decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: (article.urlToImage != "")
-                                        ? NetworkImage(article.urlToImage)
-                                        : AssetImage("assets/images/background_home_image.png"),
-                                    fit: BoxFit.fill,
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                      colors: [
+                                        Colors.black.withValues(alpha: 0.3),
+                                        Colors.black.withValues(alpha: 0.7),
+                                      ]
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -86,9 +97,9 @@ class TrendingNewsWidget extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       RequestStatusEnum.eError => Padding(
