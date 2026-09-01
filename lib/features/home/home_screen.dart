@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/features/home/components/trending_news_widget.dart';
+import 'package:news_app/features/home/components/view_all_widget.dart';
 import 'package:news_app/features/home/home_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,18 @@ class HomeScreen extends StatelessWidget {
       builder: (context, _) {
         return Consumer<HomeController>(
           builder: (BuildContext context, HomeController controller, _) {
-            return Scaffold(body: Column(children: [TrendingNewsWidget()]));
+            return Scaffold(
+                body: Column(
+                    children: [
+                      TrendingNewsWidget(),
+                      ViewAllWidget(
+                          onTap: (){},
+                          title: "Categories",
+                          titleColor: Theme.of(context).textTheme.labelLarge?.color,
+                      ),
+                    ]
+                ),
+            );
           },
         );
       },
