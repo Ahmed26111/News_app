@@ -10,7 +10,13 @@ class HomeController with ChangeNotifier {
   List<NewsArticleModel> newsEveryThingArticles = [];
   ApiService apiService = ApiService();
   String? errorMessage;
-  CategoriesEnum selectedCategory = CategoriesEnum.eBusiness;
+
+  HomeController(){
+    callHeadLineEndPoint();
+    callEverythingEndPoint();
+  }
+
+  CategoriesEnum selectedCategory = CategoriesEnum.eTopNews;
 
   RequestStatusEnum everythingRequestStatus = RequestStatusEnum.eLoading;
 
@@ -43,10 +49,16 @@ class HomeController with ChangeNotifier {
     topHeadLineRequestStatus = RequestStatusEnum.eLoading;
     errorMessage = null;
     notifyListeners();
+    String category = selectedCategory.name.toLowerCase();
     try {
       Map<String, dynamic> data = await apiService.get(
         endPoint: ApiConfiguration.headLineEndPoint,
-        query: {"country": "us", "pageSize": "20", "page": "1"},
+        query: {
+          "country": "us",
+          "category": (selectedCategory != CategoriesEnum.eTopNews) ? category : null,
+          "pageSize": "20",
+          "page": "1",
+        },
       );
       newsHeadLineArticles = (data["articles"] as List<dynamic>)
           .map(
@@ -64,6 +76,7 @@ class HomeController with ChangeNotifier {
 
   void changeSelectedCategory(CategoriesEnum category) {
     selectedCategory = category;
+    callHeadLineEndPoint();
     notifyListeners();
   }
 }

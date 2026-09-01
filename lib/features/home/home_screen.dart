@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => HomeController()..callEverythingEndPoint(),
+      create: (_) => HomeController(),
       builder: (context, _) {
         return Consumer<HomeController>(
           builder: (BuildContext context, HomeController controller, _) {

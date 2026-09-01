@@ -1,4 +1,5 @@
 enum CategoriesEnum{
+  eTopNews(name: "Top News"),
   eBusiness(name: "Business"),
   eEntertainment(name: "Entertainment"),
   eGeneral(name: "General"),
