@@ -71,7 +71,7 @@ ThemeData lightTheme(BuildContext context) {
       ),
       titleMedium: TextStyle(
         fontSize: 20,
-        color: LightColorConstant.textThirdColor,
+        color: LightColorConstant.textSecondaryColor,
         fontWeight: FontWeight.w700,
       ),
       titleSmall: TextStyle(
@@ -93,6 +93,11 @@ ThemeData lightTheme(BuildContext context) {
         fontSize: 14,
         color: LightColorConstant.textPrimaryColor,
       ),
+      bodyMedium: TextStyle(
+        fontSize: 16,
+        color: LightColorConstant.textSecondaryColor,
+        fontWeight: FontWeight.w400
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -100,7 +105,7 @@ ThemeData lightTheme(BuildContext context) {
       hintStyle: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
-        color: LightColorConstant.textThirdColor,
+        color: LightColorConstant.textSecondaryColor,
       ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.zero,

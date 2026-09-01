@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/core/enum/categories_enum.dart';
 import 'package:news_app/core/enum/request_status_enum.dart';
 import ' models/news_article_model.dart';
 import '../../core/data_source/remote_data/api_configuration.dart';
@@ -9,6 +10,7 @@ class HomeController with ChangeNotifier {
   List<NewsArticleModel> newsEveryThingArticles = [];
   ApiService apiService = ApiService();
   String? errorMessage;
+  CategoriesEnum selectedCategory = CategoriesEnum.eBusiness;
 
   RequestStatusEnum everythingRequestStatus = RequestStatusEnum.eLoading;
 
@@ -57,6 +59,11 @@ class HomeController with ChangeNotifier {
       topHeadLineRequestStatus = RequestStatusEnum.eError;
       errorMessage = e.toString();
     }
+    notifyListeners();
+  }
+
+  void changeSelectedCategory(CategoriesEnum category) {
+    selectedCategory = category;
     notifyListeners();
   }
 }
