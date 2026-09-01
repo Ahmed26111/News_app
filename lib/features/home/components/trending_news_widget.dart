@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/enum/request_status_enum.dart';
+import 'package:news_app/core/utils/utility.dart';
 import 'package:news_app/features/home/home_controller.dart';
 import 'package:provider/provider.dart';
 
@@ -58,7 +59,7 @@ class TrendingNewsWidget extends StatelessWidget {
                         height: 140,
                         child: ListView.separated(
                           padding: const EdgeInsets.only(left: 16),
-                          itemCount: controller.newsEveryThingArticles.length,
+                          itemCount: controller.newsEveryThingArticles.take(6).length,
                           separatorBuilder: (_, _) => SizedBox(width: 12),
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext context, int index) {
@@ -87,14 +88,55 @@ class TrendingNewsWidget extends StatelessWidget {
                                   ),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    article.title,
-                                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                                      color: Theme.of(context).primaryColorLight,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 14,
-                                    ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        article.title,
+                                        style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                          color: Theme.of(context).primaryColorLight,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 14,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      SizedBox(height: 4,),
+                                      Row(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundImage: (article.urlToImage != "")
+                                                ? NetworkImage(article.urlToImage)
+                                                : AssetImage("assets/images/background_home_image.png"),
+                                            radius: 15,
+                                          ),
+                                          SizedBox(width: 4,),
+                                          Expanded(
+                                            child: Text(
+                                              (article.author == "")?"Unknown":article.author,
+                                              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                                color: Theme.of(context).primaryColorLight,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 12
+                                              ),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          SizedBox(width: 4,),
+                                          Text(
+                                            Utility.getDifferenceFormateDateTime(article.publishedAt),
+                                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                              color: Theme.of(context).primaryColorLight,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
                                   ),
                                 ),
                               ),

@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/core/utils/validation.dart';
+import 'package:news_app/core/utils/utility.dart';
 import 'package:news_app/core/widgets/custom_text_form_field.dart';
 import 'package:news_app/features/authentication/register_screen.dart';
 
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _emailValidator(String? value) {
     if(value == null || value.isEmpty){
       return "Email is required";
-    }else if(!Validation.isValidEmail(value)){
+    }else if(!Utility.isValidEmail(value)){
       return "Invalid email";
     }else{
       return null;
@@ -151,17 +151,17 @@ class _LoginScreenState extends State<LoginScreen> {
   String? _passwordValidator(String? value) {
     if(value == null || value.isEmpty){
       return "Password is required";
-    }else if(!Validation.isValidPassword(value)){
-      if(!Validation.isContainSpecialCharacter(value)){
+    }else if(!Utility.isValidPassword(value)){
+      if(!Utility.isContainSpecialCharacter(value)){
         return "Password must contain special character";
-      }else if(!Validation.isContainLowerCaseCharacter(value)){
+      }else if(!Utility.isContainLowerCaseCharacter(value)){
         return "Password must contain lower case character";
-      }else if(!Validation.isContainUpperCaseCharacter(value)){
+      }else if(!Utility.isContainUpperCaseCharacter(value)){
         return "Password must contain upper case character";
       }
-      else if(!Validation.isContainDigitCharacter(value)){
+      else if(!Utility.isContainDigitCharacter(value)){
         return "Password must contain digit character";
-      }else if(!Validation.hasMinLength(value)){
+      }else if(!Utility.hasMinLength(value)){
         return "Password must be at least 8 characters long";
       }
       return "Invalid password";

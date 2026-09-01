@@ -21,7 +21,7 @@ class HomeController with ChangeNotifier {
     try {
       Map<String, dynamic> data = await apiService.get(
         endPoint: ApiConfiguration.everythingEndPoint,
-        query: {"q": "bitcoin", "pageSize": "10", "page": "1"},
+        query: {"q": "bitcoin", "pageSize": "20", "page": "1"},
       );
       newsEveryThingArticles = (data["articles"] as List<dynamic>)
           .map(
@@ -44,7 +44,7 @@ class HomeController with ChangeNotifier {
     try {
       Map<String, dynamic> data = await apiService.get(
         endPoint: ApiConfiguration.headLineEndPoint,
-        query: {"country": "us", "pageSize": "10", "page": "1"},
+        query: {"country": "us", "pageSize": "20", "page": "1"},
       );
       newsHeadLineArticles = (data["articles"] as List<dynamic>)
           .map(
