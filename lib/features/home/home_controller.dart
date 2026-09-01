@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/core/enum/request_status_enum.dart';
 import ' models/news_article_model.dart';
 import '../../core/data_source/remote_data/api_configuration.dart';
 import '../../core/data_source/remote_data/api_service.dart';
 
 class HomeController with ChangeNotifier {
-  bool isEverythingLoading = true;
-  bool isTopHeadLineLoading = true;
   List<NewsArticleModel> newsHeadLineArticles = [];
   List<NewsArticleModel> newsEveryThingArticles = [];
   ApiService apiService = ApiService();
   String? errorMessage;
 
+  RequestStatusEnum everythingRequestStatus = RequestStatusEnum.eLoading;
+
+  RequestStatusEnum topHeadLineRequestStatus = RequestStatusEnum.eLoading;
+
   void callEverythingEndPoint() async {
-    isEverythingLoading = true;
+    everythingRequestStatus = RequestStatusEnum.eLoading;
     errorMessage = null;
     notifyListeners();
     try {
@@ -25,17 +28,17 @@ class HomeController with ChangeNotifier {
             (json) => NewsArticleModel.fromJson(json as Map<String, dynamic>),
           )
           .toList();
-      isEverythingLoading = false;
+      everythingRequestStatus = RequestStatusEnum.eLoaded;
       errorMessage = null;
     } catch (e) {
-      isEverythingLoading = false;
+      everythingRequestStatus = RequestStatusEnum.eError;
       errorMessage = e.toString();
     }
     notifyListeners();
   }
 
   void callHeadLineEndPoint() async {
-    isTopHeadLineLoading = true;
+    topHeadLineRequestStatus = RequestStatusEnum.eLoading;
     errorMessage = null;
     notifyListeners();
     try {
@@ -48,10 +51,10 @@ class HomeController with ChangeNotifier {
             (json) => NewsArticleModel.fromJson(json as Map<String, dynamic>),
           )
           .toList();
-      isTopHeadLineLoading = false;
+      topHeadLineRequestStatus = RequestStatusEnum.eLoaded;
       errorMessage = null;
     } catch (e) {
-      isTopHeadLineLoading = false;
+      topHeadLineRequestStatus = RequestStatusEnum.eError;
       errorMessage = e.toString();
     }
     notifyListeners();
