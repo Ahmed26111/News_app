@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:news_app/core/extensions/date_time_extension.dart';
+import 'package:news_app/core/widgets/custom_cached_network_image.dart';
 import 'package:news_app/features/home/%20models/news_article_model.dart';
 
 import '../../../core/utils/utility.dart';
@@ -19,9 +20,9 @@ class NewsArticleWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
-            child: (articleModel.urlToImage != "")
-                ? Image.network(articleModel.urlToImage, width: 122, height: 68)
-                : Image.asset("assets/images/background_home_image.png", width: 122, height: 68),
+            child: CustomCachedNetworkImage(
+                imageUrl: articleModel.urlToImage,
+            ),
           ),
           SizedBox(width: 8),
           Expanded(
@@ -78,8 +79,8 @@ class NewsArticleWidget extends StatelessWidget {
       return "Unknown";
     }
     else{
-      if(author.length > 10){
-        return "${author.substring(0 , 10)}...";
+      if(author.length > 9){
+        return "${author.substring(0 , 9)}...";
       }
       return author;
     }

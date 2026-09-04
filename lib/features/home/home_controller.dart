@@ -23,6 +23,8 @@ class HomeController with ChangeNotifier {
   RequestStatusEnum topHeadLineRequestStatus = RequestStatusEnum.eLoading;
 
   void callEverythingEndPoint() async {
+    // await Future.delayed(Duration(seconds: 10)); //? for testing
+
     everythingRequestStatus = RequestStatusEnum.eLoading;
     errorMessage = null;
     notifyListeners();
@@ -46,6 +48,8 @@ class HomeController with ChangeNotifier {
   }
 
   void callHeadLineEndPoint() async {
+    // await Future.delayed(Duration(seconds: 10)); //? for testing
+
     topHeadLineRequestStatus = RequestStatusEnum.eLoading;
     errorMessage = null;
     notifyListeners();
