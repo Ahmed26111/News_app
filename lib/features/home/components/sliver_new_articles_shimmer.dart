@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/widgets/custom_shimmer_from_colors.dart';
 
-class NewArticlesShimmer extends StatelessWidget {
-  const NewArticlesShimmer({super.key});
+class SliverNewArticlesShimmer extends StatelessWidget {
+  const SliverNewArticlesShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SliverPadding(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      child: ListView.builder(
+      sliver: SliverList.builder(
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
           return Padding(

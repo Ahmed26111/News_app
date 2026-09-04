@@ -13,16 +13,17 @@ ThemeData lightTheme(BuildContext context) {
     secondaryHeaderColor: LightColorConstant.secondaryHeaderColor,
     primaryColorLight: LightColorConstant.buttonTextColor,
     scaffoldBackgroundColor: LightColorConstant.scaffoldBackgroundColor,
-    // appBarTheme: AppBarTheme(
-    //   backgroundColor: Color(0xFFF6F7F9),
-    //   centerTitle: true,
-    //   foregroundColor: Color(0xFF161F1B),
-    //   titleTextStyle: TextStyle(
-    //     fontSize: 20,
-    //     color: Color(0xFF161F1B),
-    //     fontWeight: FontWeight.w400,
-    //   ),
-    // ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: LightColorConstant.inputDecorationFillColor,
+      centerTitle: true,
+      foregroundColor: LightColorConstant.textPrimaryColor,
+      titleTextStyle: TextStyle(
+        fontSize: 16,
+        color: LightColorConstant.textPrimaryColor,
+        fontWeight: FontWeight.w700,
+      ),
+      scrolledUnderElevation: 0,
+    ),
     // switchTheme: SwitchThemeData(
     //   trackColor: WidgetStateProperty.resolveWith<Color>((states) {
     //     if (states.contains(WidgetState.selected)) {
