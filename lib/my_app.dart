@@ -11,13 +11,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => HomeController(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme(context),
-        home: const SplashScreen(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: lightTheme(context),
+      home: const SplashScreen(),
     );
   }
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/enum/categories_enum.dart';
 import 'package:news_app/features/home/categories_screen.dart';
 import 'package:news_app/features/home/components/view_all_widget.dart';
+import 'package:news_app/features/home/home_controller.dart';
+import 'package:provider/provider.dart';
 import '../widgets/custom_category_text_button.dart';
 
 class SliverCategoriesListWidget extends StatelessWidget {
@@ -16,7 +18,12 @@ class SliverCategoriesListWidget extends StatelessWidget {
             onTap: (){
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context)=>CategoriesScreen())
+                  MaterialPageRoute(
+                      builder: (_)=> ChangeNotifierProvider.value(
+                        value: context.read<HomeController>(),
+                        child: CategoriesScreen(),
+                      )
+                  )
               );
             },
             title: "Categories",
