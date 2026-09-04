@@ -1,10 +1,12 @@
+import 'package:news_app/core/extensions/date_time_extension.dart';
+
 class NewsArticleModel {
   final String author;
   final String title;
   final String description;
   final String url;
   final String urlToImage;
-  final String publishedAt;
+  final DateTime publishedAt;
   final String content;
 
   NewsArticleModel({
@@ -36,7 +38,7 @@ class NewsArticleModel {
       description: json["description"] ?? "",
       url: json["url"] ?? "",
       urlToImage: json["urlToImage"] ?? "",
-      publishedAt: json["publishedAt"] ?? "",
+      publishedAt: DateTime.tryParse(json["publishedAt"]) ?? DateTime.now(),
       content: json["content"] ?? "",
     );
   }
@@ -47,7 +49,7 @@ class NewsArticleModel {
     String? description,
     String? url,
     String? urlToImage,
-    String? publishedAt,
+    DateTime? publishedAt,
     String? content,
   }) {
     return NewsArticleModel(
@@ -63,6 +65,6 @@ class NewsArticleModel {
 
   @override
   String toString() {
-    return 'NewsArticleModel(author: $author, title: $title, description: $description, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt, content: $content)';
+    return 'NewsArticleModel(author: $author, title: $title, description: $description, url: $url, urlToImage: $urlToImage, publishedAt: ${publishedAt.getDifferenceFormateDateTime(true)}, content: $content)';
   }
 }

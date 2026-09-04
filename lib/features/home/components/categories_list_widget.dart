@@ -7,18 +7,20 @@ class CategoriesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16 ,right: 8),
-      child: SizedBox(
-        height: 30,
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: CategoriesEnum.values.length,
-          separatorBuilder: (BuildContext context, int index) => SizedBox(width: 12,),
-          itemBuilder: (BuildContext context, int index) {
-            return CustomCategoryTextButton(category: CategoriesEnum.values[index]);
-          },
-        ),
-    ),);
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16 ,right: 8),
+        child: SizedBox(
+          height: 30,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: CategoriesEnum.values.length,
+            separatorBuilder: (BuildContext context, int index) => SizedBox(width: 12,),
+            itemBuilder: (BuildContext context, int index) {
+              return CustomCategoryTextButton(category: CategoriesEnum.values[index]);
+            },
+          ),
+      ),),
+    );
   }
 }
