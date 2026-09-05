@@ -3,7 +3,10 @@ import 'package:news_app/features/home/components/sliver_categories_list_widget.
 import 'package:news_app/features/home/components/sliver_news_articles_list_widget.dart';
 import 'package:news_app/features/home/components/trending_news_widget.dart';
 import 'package:news_app/features/home/home_controller.dart';
+import 'package:news_app/features/home/repos/news_repository.dart';
 import 'package:provider/provider.dart';
+
+import '../../core/data_source/remote_data/api_service.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => HomeController(),
+      create: (_) => HomeController(newsRepository: NewsRepository(apiService: ApiService())),
       child: Consumer<HomeController>(
         builder: (BuildContext context, HomeController controller, _) {
           return Scaffold(

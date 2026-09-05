@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/enum/categories_enum.dart';
 import 'package:news_app/core/enum/request_status_enum.dart';
+import 'package:news_app/features/home/repos/news_repository.dart';
 import ' models/news_article_model.dart';
 import '../../core/data_source/remote_data/api_configuration.dart';
 import '../../core/data_source/remote_data/api_service.dart';
@@ -8,10 +9,9 @@ import '../../core/data_source/remote_data/api_service.dart';
 class HomeController with ChangeNotifier {
   List<NewsArticleModel> newsHeadLineArticles = [];
   List<NewsArticleModel> newsEveryThingArticles = [];
-  ApiService apiService = ApiService();
   String? errorMessage;
 
-  HomeController(){
+  HomeController({required this.newsRepository}) {
     callHeadLineEndPoint();
     callEverythingEndPoint();
   }
@@ -22,22 +22,14 @@ class HomeController with ChangeNotifier {
 
   RequestStatusEnum topHeadLineRequestStatus = RequestStatusEnum.eLoading;
 
-  void callEverythingEndPoint() async {
-    // await Future.delayed(Duration(seconds: 10)); //? for testing
+  final BaseNewsRepository newsRepository;
 
+  void callEverythingEndPoint() async {
     everythingRequestStatus = RequestStatusEnum.eLoading;
     errorMessage = null;
     notifyListeners();
     try {
-      Map<String, dynamic> data = await apiService.get(
-        endPoint: ApiConfiguration.everythingEndPoint,
-        query: {"q": "bitcoin", "pageSize": "20", "page": "1"},
-      );
-      newsEveryThingArticles = (data["articles"] as List<dynamic>)
-          .map(
-            (json) => NewsArticleModel.fromJson(json as Map<String, dynamic>),
-          )
-          .toList();
+      newsEveryThingArticles = await newsRepository.callEverythingEndPoint();
       everythingRequestStatus = RequestStatusEnum.eLoaded;
       errorMessage = null;
     } catch (e) {
@@ -48,27 +40,14 @@ class HomeController with ChangeNotifier {
   }
 
   void callHeadLineEndPoint() async {
-    // await Future.delayed(Duration(seconds: 10)); //? for testing
-
     topHeadLineRequestStatus = RequestStatusEnum.eLoading;
     errorMessage = null;
     notifyListeners();
     String category = selectedCategory.name.toLowerCase();
     try {
-      Map<String, dynamic> data = await apiService.get(
-        endPoint: ApiConfiguration.headLineEndPoint,
-        query: {
-          "country": "us",
-          "category": (selectedCategory != CategoriesEnum.eTopNews) ? category : null,
-          "pageSize": "20",
-          "page": "1",
-        },
+      newsHeadLineArticles = await newsRepository.callHeadLineEndPoint(
+        selectedCategory: (selectedCategory == CategoriesEnum.eTopNews) ? null : category,
       );
-      newsHeadLineArticles = (data["articles"] as List<dynamic>)
-          .map(
-            (json) => NewsArticleModel.fromJson(json as Map<String, dynamic>),
-          )
-          .toList();
       topHeadLineRequestStatus = RequestStatusEnum.eLoaded;
       errorMessage = null;
     } catch (e) {
