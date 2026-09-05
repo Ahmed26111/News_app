@@ -4,6 +4,7 @@ import 'package:news_app/features/home/categories_screen.dart';
 import 'package:news_app/features/home/components/view_all_widget.dart';
 import 'package:news_app/features/home/home_controller.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/app_sizes.dart';
 import '../widgets/custom_category_text_button.dart';
 
 class SliverCategoriesListWidget extends StatelessWidget {
@@ -30,13 +31,13 @@ class SliverCategoriesListWidget extends StatelessWidget {
             titleColor: Theme.of(context).textTheme.labelLarge?.color,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 16 ,right: 8),
+            padding: EdgeInsets.only(left: AppSizes.pw16 ,right: AppSizes.pw8),
             child: SizedBox(
-              height: 30,
+              height: AppSizes.h30,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: CategoriesEnum.values.length,
-                separatorBuilder: (BuildContext context, int index) => SizedBox(width: 12,),
+                separatorBuilder: (BuildContext context, int index) => SizedBox(width: AppSizes.w12,),
                 itemBuilder: (BuildContext context, int index) {
                   return CustomCategoryTextButton(category: CategoriesEnum.values[index]);
                 },

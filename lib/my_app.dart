@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/core/theme/light_theme.dart';
-import 'package:news_app/features/home/home_controller.dart';
-import 'package:provider/provider.dart';
-
 import 'features/splash/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -11,10 +9,16 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme(context),
-      home: const SplashScreen(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 832),
+      minTextAdapt: true,
+      builder: (context , _){
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: lightTheme(context),
+          home: const SplashScreen(),
+        );
+      },
     );
   }
 }

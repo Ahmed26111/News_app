@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../constants/app_sizes.dart';
 import 'light_color_constant.dart';
 
 ThemeData lightTheme(BuildContext context) {
@@ -18,7 +18,7 @@ ThemeData lightTheme(BuildContext context) {
       centerTitle: true,
       foregroundColor: LightColorConstant.textPrimaryColor,
       titleTextStyle: TextStyle(
-        fontSize: 16,
+        fontSize: AppSizes.sp16,
         color: LightColorConstant.textPrimaryColor,
         fontWeight: FontWeight.w700,
       ),
@@ -54,9 +54,9 @@ ThemeData lightTheme(BuildContext context) {
       style: FilledButton.styleFrom(
         backgroundColor: LightColorConstant.primaryColor,
         foregroundColor: LightColorConstant.buttonTextColor,
-        fixedSize: Size(MediaQuery.of(context).size.width, 48),
+        fixedSize: Size(MediaQuery.of(context).size.width, AppSizes.h48),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-        textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+        textStyle: TextStyle(fontSize: AppSizes.sp16, fontWeight: FontWeight.w400),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
@@ -66,36 +66,36 @@ ThemeData lightTheme(BuildContext context) {
     ),
     textTheme: TextTheme(
       titleLarge: TextStyle(
-        fontSize: 20,
+        fontSize: AppSizes.sp20,
         color: LightColorConstant.primaryDarkGreyColor,
         fontWeight: FontWeight.w700,
       ),
       titleMedium: TextStyle(
-        fontSize: 20,
+        fontSize: AppSizes.sp20,
         color: LightColorConstant.textSecondaryColor,
         fontWeight: FontWeight.w700,
       ),
       titleSmall: TextStyle(
-        fontSize: 16,
+        fontSize: AppSizes.sp16,
         color: LightColorConstant.primaryColor,
         fontWeight: FontWeight.w400,
       ),
       labelMedium: TextStyle(
-        fontSize: 16,
+        fontSize: AppSizes.sp16,
         color: LightColorConstant.primaryMediumGreyColor,
         fontWeight: FontWeight.w400,
       ),
       labelLarge: TextStyle(
-        fontSize: 16,
+        fontSize: AppSizes.sp16,
         color: LightColorConstant.textPrimaryColor,
         fontWeight: FontWeight.w400,
       ),
       labelSmall: TextStyle(
-        fontSize: 14,
+        fontSize: AppSizes.sp14,
         color: LightColorConstant.textPrimaryColor,
       ),
       bodyMedium: TextStyle(
-        fontSize: 16,
+        fontSize: AppSizes.sp16,
         color: LightColorConstant.textSecondaryColor,
         fontWeight: FontWeight.w400
       ),
@@ -104,7 +104,7 @@ ThemeData lightTheme(BuildContext context) {
       filled: true,
       fillColor: LightColorConstant.inputDecorationFillColor,
       hintStyle: TextStyle(
-        fontSize: 16,
+        fontSize: AppSizes.sp16,
         fontWeight: FontWeight.w400,
         color: LightColorConstant.textSecondaryColor,
       ),
@@ -129,6 +129,11 @@ ThemeData lightTheme(BuildContext context) {
         borderSide: BorderSide(color: Colors.redAccent, width: 0.5),
       ),
     ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: LightColorConstant.primaryColor,
+      selectionColor: LightColorConstant.primaryColor.withValues(alpha: 0.5),
+      selectionHandleColor: LightColorConstant.primaryColor,
+    ),
     //   progressIndicatorTheme: ProgressIndicatorThemeData(
     //     color: Color(0xFF15B86C),
     //     circularTrackColor: Color(0xFF9E9E9E),
@@ -149,19 +154,14 @@ ThemeData lightTheme(BuildContext context) {
     //     backgroundColor: Color(0xFF15B86C),
     //     foregroundColor: Color(0xFFFFFCFC),
     //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-    //     extendedTextStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+    //     extendedTextStyle: TextStyle(fontSize: AppSizes.sp14, fontWeight: FontWeight.w500),
     //   ),
-      textSelectionTheme: TextSelectionThemeData(
-        cursorColor: LightColorConstant.primaryColor,
-        selectionColor: LightColorConstant.primaryColor.withValues(alpha: 0.5),
-        selectionHandleColor: LightColorConstant.primaryColor,
-      ),
     //   listTileTheme: ListTileThemeData(
     //     contentPadding: EdgeInsets.zero,
     //     titleTextStyle: TextStyle(
     //       color: Color(0xFF161F1B),
     //       fontWeight: FontWeight.w400,
-    //       fontSize: 16,
+    //       fontSize: AppSizes.sp16,
     //     ),
     //     iconColor: Color(0xFF3A4640),
     //   ),
@@ -183,7 +183,7 @@ ThemeData lightTheme(BuildContext context) {
     //     elevation: 3,
     //     shadowColor: Color(0xFFD1DAD6),
     //     textStyle: TextStyle(
-    //       fontSize: 20,
+    //       fontSize: AppSizes.sp20,
     //       fontWeight: FontWeight.w400,
     //       color: Color(0xFF161F1B),
     //     ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/constants/app_sizes.dart';
+
 class ViewAllWidget extends StatelessWidget {
   const ViewAllWidget({super.key, required this.title, this.titleColor, required this.onTap});
 
@@ -10,7 +12,7 @@ class ViewAllWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

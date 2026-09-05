@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/enum/categories_enum.dart';
 import 'package:news_app/features/home/home_controller.dart';
 import 'package:provider/provider.dart';
+import '../../../core/constants/app_sizes.dart';
 
 class CustomCategoryTextButton extends StatelessWidget {
   const CustomCategoryTextButton({super.key, required this.category});
@@ -31,8 +32,8 @@ class CustomCategoryTextButton extends StatelessWidget {
                 ),
                 if(isSelected)
                   ...[
-                    SizedBox(height: 4,),
-                    Divider(height: 3, thickness: 3, color: Theme.of(context).textTheme.titleSmall?.color,)
+                    SizedBox(height: AppSizes.h4,),
+                    Divider(height: AppSizes.h3, thickness: 3, color: Theme.of(context).textTheme.titleSmall?.color,)
                   ]
               ],
             ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/features/home/components/news_articles_list_widget.dart';
-
+import '../../core/constants/app_sizes.dart';
 import 'components/categories_list_widget.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -15,7 +15,7 @@ class CategoriesScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          SizedBox(height: 20,),
+          SizedBox(height: AppSizes.h20,),
           CategoriesListWidget(),
           Expanded(child: NewsArticlesListWidget()),
         ],

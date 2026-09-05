@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/core/data_source/local_data/shared_preferences_manager.dart';
 
+import '../../core/constants/app_sizes.dart';
 import '../../core/data_source/local_data/shared_preferences_keys.dart';
 import '../../core/utils/utility.dart';
 import '../../core/widgets/custom_text_form_field.dart';
@@ -55,7 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
             child: Form(
               key: _formKey,
               child: Column(
@@ -65,22 +66,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Center(
                     child: Image.asset(
                       "assets/images/logo_image.png",
-                      height: 46,
+                      height: AppSizes.h46,
                     ),
                   ),
-                  SizedBox(height: 24),
+                  SizedBox(height: AppSizes.h24),
                   Text(
                     "Welcome to News",
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: AppSizes.h16),
                   CustomTextFormField(
                     controller: _emailController,
                     hintText: "usama@gmail.com",
                     title: "Email",
                     validator: _emailValidator,
                   ),
-                  SizedBox(height: 12),
+                  SizedBox(height: AppSizes.h12),
                   CustomTextFormField(
                     controller: _passwordController,
                     hintText: "*************",
@@ -88,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     isObscureText: true,
                     validator: _passwordValidator,
                   ),
-                  SizedBox(height: 12),
+                  SizedBox(height: AppSizes.h12),
                   CustomTextFormField(
                     controller: _confirmPasswordController,
                     hintText: "*************",
@@ -96,10 +97,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     isObscureText: true,
                     validator: _passwordValidator,
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: AppSizes.h20),
                   if(errorMessage != null)
                     Padding(
-                      padding: const EdgeInsets.all(12),
+                      padding: EdgeInsets.all(AppSizes.pw12),
                       child: Text(
                         errorMessage!,
                         style: TextStyle(color: Colors.red),
@@ -113,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                     child: isLoading ? CircularProgressIndicator(color: Theme.of(context).secondaryHeaderColor,) : Text("Sign Up"),
                   ),
-                  SizedBox(height: 24),
+                  SizedBox(height: AppSizes.h24),
                   Center(
                     child: RichText(
                       text: TextSpan(

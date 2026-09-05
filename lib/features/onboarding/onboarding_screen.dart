@@ -3,6 +3,7 @@ import 'package:news_app/features/onboarding/models/onboarding_model.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../core/constants/app_sizes.dart';
 import '../../core/theme/light_color_constant.dart';
 import 'controller/onboarding_controller.dart';
 
@@ -30,11 +31,11 @@ class OnboardingScreen extends StatelessWidget {
             ],
           ),
           body: Padding(
-            padding: const EdgeInsets.only(
-              left: 16,
-              right: 16,
-              top: 30,
-              bottom: 20,
+            padding: EdgeInsets.only(
+              left: AppSizes.pw16,
+              right: AppSizes.pw16,
+              top: AppSizes.ph30,
+              bottom: AppSizes.ph20,
             ),
             child: Column(
               children: [
@@ -52,18 +53,18 @@ class OnboardingScreen extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.8, //? 80% possible width
                             fit: BoxFit.cover,
                           ),
-                          SizedBox(height: 24),
+                          SizedBox(height: AppSizes.h24),
                           Text(
                             model.title,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
-                          SizedBox(height: 12),
+                          SizedBox(height: AppSizes.h12),
                           Text(
                             model.description,
                             style: Theme.of(context).textTheme.labelMedium,
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(height: 24),
+                          SizedBox(height: AppSizes.h24),
                         ],
                       );
                     },
@@ -78,7 +79,7 @@ class OnboardingScreen extends StatelessWidget {
                       effect: WormEffect(
                         activeDotColor: Theme.of(context).primaryColor,
                         dotColor: Theme.of(context).secondaryHeaderColor,
-                        spacing: 6,
+                        spacing: AppSizes.w6,
                       ),
                       onDotClicked: (index) {
                         indicatorController.controller.animateToPage(
@@ -90,7 +91,7 @@ class OnboardingScreen extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(height: 84,),
+                SizedBox(height: AppSizes.h84,),
                 Consumer<OnboardingController>(
                   builder: (BuildContext context, OnboardingController filledButtonController, _) {
                     return FilledButton(

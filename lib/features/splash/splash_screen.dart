@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:news_app/features/onboarding/onboarding_screen.dart';
-
 import '../../core/data_source/local_data/shared_preferences_keys.dart';
 import '../../core/data_source/local_data/shared_preferences_manager.dart';
 import '../authentication/login_screen.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/widgets/custom_shimmer_from_colors.dart';
+import '../../../core/constants/app_sizes.dart';
 
 class NewArticlesShimmer extends StatelessWidget {
   const NewArticlesShimmer({super.key});
@@ -7,27 +8,27 @@ class NewArticlesShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: EdgeInsets.symmetric(vertical: AppSizes.ph16),
       child: ListView.builder(
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
+            padding: EdgeInsets.only(left: AppSizes.pw16, right: AppSizes.pw16, bottom: AppSizes.ph12),
             child: Row(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(AppSizes.r8),
                   child: CustomShimmerFromColors(
                     child: ColoredBox(
                       color: Colors.black,
                       child: SizedBox(
-                        width: 122,
-                        height: 68,
+                        width: AppSizes.w122,
+                        height: AppSizes.h68,
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: AppSizes.w8),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,27 +38,27 @@ class NewArticlesShimmer extends StatelessWidget {
                         child: ColoredBox(
                             color: Colors.black,
                             child: SizedBox(
-                              width: 180,
-                              height: 16,
+                              width: AppSizes.w180,
+                              height: AppSizes.h16,
                             ),
                         ),
                       ),
-                      SizedBox(height: 4),
+                      SizedBox(height: AppSizes.h4),
                       Row(
                         children: [
                           CustomShimmerFromColors(
                             child: CircleAvatar(
                               backgroundColor: Colors.transparent,
-                              radius: 15,
+                              radius: AppSizes.r15,
                             ),
                           ),
-                          SizedBox(width: 4),
+                          SizedBox(width: AppSizes.w4),
                           CustomShimmerFromColors(
                             child: ColoredBox(
                               color: Colors.black,
                               child: SizedBox(
-                                width: 150,
-                                height: 16,
+                                width: AppSizes.w150,
+                                height: AppSizes.h16,
                               ),
                             ),
                           ),
