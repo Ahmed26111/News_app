@@ -99,6 +99,11 @@ ThemeData lightTheme(BuildContext context) {
         color: LightColorConstant.textSecondaryColor,
         fontWeight: FontWeight.w400
       ),
+      bodySmall: TextStyle(
+          fontSize: AppSizes.sp14,
+          color: LightColorConstant.tertiaryTextColor,
+          fontWeight: FontWeight.w400
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
