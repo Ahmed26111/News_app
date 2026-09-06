@@ -3,12 +3,12 @@ import 'package:news_app/core/enum/categories_enum.dart';
 import 'package:news_app/core/enum/request_status_enum.dart';
 import 'package:news_app/features/home/repos/news_repository.dart';
 import ' models/news_article_model.dart';
+import '../../core/mixins/safe_notifier_mixin.dart';
 
-class HomeController with ChangeNotifier {
+class HomeController extends ChangeNotifier with SafeNotifier{
   List<NewsArticleModel> newsHeadLineArticles = [];
   List<NewsArticleModel> newsEveryThingArticles = [];
   String? errorMessage;
-  bool isDisposed = false;
 
 
   HomeController({required this.newsRepository}) {
@@ -61,18 +61,5 @@ class HomeController with ChangeNotifier {
     selectedCategory = category;
     callHeadLineEndPoint();
     notifyListeners();
-  }
-
-  @override
-  void notifyListeners() {
-    if(!isDisposed){
-      super.notifyListeners();
-    }
-  }
-
-  @override
-  void dispose() {
-    isDisposed = true;
-    super.dispose();
   }
 }
