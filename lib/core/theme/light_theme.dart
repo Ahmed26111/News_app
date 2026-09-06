@@ -104,6 +104,11 @@ ThemeData lightTheme(BuildContext context) {
           color: LightColorConstant.tertiaryTextColor,
           fontWeight: FontWeight.w400
       ),
+      bodyLarge: TextStyle(
+          fontSize: AppSizes.sp16,
+          color: LightColorConstant.placeholderTextColor,
+          fontWeight: FontWeight.w400
+      ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -170,7 +175,7 @@ ThemeData lightTheme(BuildContext context) {
     //     ),
     //     iconColor: Color(0xFF3A4640),
     //   ),
-    //   dividerTheme: DividerThemeData(color: Color(0xFFD1DAD6), thickness: 1),
+    dividerTheme: DividerThemeData(color: LightColorConstant.borderColor, thickness: 1),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: LightColorConstant.scaffoldBackgroundColor,
       type: BottomNavigationBarType.fixed,

@@ -5,13 +5,14 @@ import '../../core/enum/request_status_enum.dart';
 import '../../core/repos/news_repository.dart';
 import '../home/ models/news_article_model.dart';
 
-class SearchController extends ChangeNotifier with SafeNotifier{
+class SearchScreenController extends ChangeNotifier with SafeNotifier {
   List<NewsArticleModel> newsEveryThingArticles = [];
   String? errorMessage;
   RequestStatusEnum everythingRequestStatus = RequestStatusEnum.eLoading;
   final BaseNewsRepository newsRepository;
+  final TextEditingController searchController = TextEditingController();
 
-  SearchController({required this.newsRepository}) {
+  SearchScreenController({required this.newsRepository}) {
     callEverythingEndPoint();
   }
 
@@ -20,7 +21,9 @@ class SearchController extends ChangeNotifier with SafeNotifier{
     errorMessage = null;
     notifyListeners();
     try {
-      newsEveryThingArticles = await newsRepository.callEverythingEndPoint();
+      newsEveryThingArticles = (searchController.text.isEmpty)
+          ? await newsRepository.callEverythingEndPoint()
+          : await newsRepository.callEverythingEndPoint(query: searchController.text);
       everythingRequestStatus = RequestStatusEnum.eLoaded;
       errorMessage = null;
     } catch (e) {
@@ -29,5 +32,4 @@ class SearchController extends ChangeNotifier with SafeNotifier{
     }
     notifyListeners();
   }
-
 }

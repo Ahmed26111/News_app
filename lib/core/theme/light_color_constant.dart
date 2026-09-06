@@ -11,4 +11,7 @@ abstract class LightColorConstant{
   static const Color inputDecorationFillColor = Color(0xFFFFFFFF);
   static const Color textPrimaryColor = Color(0xFF141414);
   static const Color tertiaryTextColor = Color(0xFFA0A0A0);
+  static const Color secondBorderColor = Color(0xFFD3D3D3);
+  static const Color borderColor = Color(0xFFD1DAD6);
+  static const Color placeholderTextColor = Color(0xFF6D6D6D);
 }
