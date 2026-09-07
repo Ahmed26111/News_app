@@ -4,6 +4,8 @@ import 'package:news_app/core/widgets/custom_cached_network_image.dart';
 import 'package:news_app/features/home/%20models/news_article_model.dart';
 
 import '../../../core/constants/app_sizes.dart';
+import '../../../core/widgets/custom_svg_picture_asset.dart';
+import '../../details/news_details_screen.dart';
 
 class NewsArticleWidget extends StatelessWidget {
   const NewsArticleWidget({super.key, required this.articleModel});
@@ -16,10 +18,18 @@ class NewsArticleWidget extends StatelessWidget {
       padding: EdgeInsets.only(left: AppSizes.pw16, right: AppSizes.pw16, bottom: AppSizes.ph12),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppSizes.r8),
-            child: CustomCachedNetworkImage(
-                imageUrl: articleModel.urlToImage,
+          GestureDetector(
+            onTap: (){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewsDetailsScreen(articleModel: articleModel))
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(AppSizes.r8),
+              child: CustomCachedNetworkImage(
+                  imageUrl: articleModel.urlToImage,
+              ),
             ),
           ),
           SizedBox(width: AppSizes.w8),
@@ -60,7 +70,9 @@ class NewsArticleWidget extends StatelessWidget {
                     Spacer(),
                     IconButton(
                         onPressed: (){},
-                        icon: Icon(Icons.bookmark_outline),
+                        icon: CustomSvgPictureAsset(
+                            path: "assets/images/bookmark_icon.svg"
+                        ),
                     ),
                   ],
                 )

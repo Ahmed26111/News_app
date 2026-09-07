@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../core/constants/app_sizes.dart';
 import '../../core/data_source/remote_data/api_service.dart';
 import '../../core/repos/news_repository.dart';
+import '../details/news_details_screen.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -40,6 +41,12 @@ class SearchScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final model = controller.newsEveryThingArticles[index];
                           return ListTile(
+                            onTap: (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => NewsDetailsScreen(articleModel: model))
+                              );
+                            },
                             contentPadding : EdgeInsets.symmetric(horizontal: AppSizes.pw16 , vertical: AppSizes.ph8),
                             leading: Icon(
                               Icons.search,

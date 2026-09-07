@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../../core/constants/app_sizes.dart';
 import '../../../core/widgets/custom_cached_network_image.dart';
+import '../../details/news_details_screen.dart';
 
 class TrendingNewsWidget extends StatelessWidget {
   const TrendingNewsWidget({super.key});
@@ -49,87 +50,95 @@ class TrendingNewsWidget extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
                               final article = controller.newsEveryThingArticles[index];
-                              return Stack(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(AppSizes.r8),
-                                    child: CustomCachedNetworkImage(
-                                      imageUrl: article.urlToImage,
-                                      width: AppSizes.w235,
-                                      height: AppSizes.h140,
-                                    ),
-                                  ),
-                                  Positioned.fill(
-                                    child: Container(
-                                      width: AppSizes.w235,
-                                      height: AppSizes.h140,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Colors.black.withValues(alpha: 0.3),
-                                            Colors.black.withValues(alpha: 0.7),
-                                          ],
-                                        ),
-                                        borderRadius: BorderRadius.circular(AppSizes.r8),
+                              return GestureDetector(
+                                onTap: (){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => NewsDetailsScreen(articleModel: article))
+                                  );
+                                },
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(AppSizes.r8),
+                                      child: CustomCachedNetworkImage(
+                                        imageUrl: article.urlToImage,
+                                        width: AppSizes.w235,
+                                        height: AppSizes.h140,
                                       ),
                                     ),
-                                  ),
-                                  Positioned.fill(
-                                    child: Padding(
-                                      padding: EdgeInsets.all(AppSizes.pw12),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            article.title,
-                                            style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                                              color: Theme.of(context).primaryColorLight,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: AppSizes.sp14,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
+                                    Positioned.fill(
+                                      child: Container(
+                                        width: AppSizes.w235,
+                                        height: AppSizes.h140,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              Colors.black.withValues(alpha: 0.3),
+                                              Colors.black.withValues(alpha: 0.7),
+                                            ],
                                           ),
-                                          SizedBox(height: AppSizes.h4),
-                                          Row(
-                                            children: [
-                                              CircleAvatar(
-                                                backgroundImage: (article.urlToImage != "")
-                                                    ? NetworkImage(article.urlToImage)
-                                                    : AssetImage("assets/images/background_home_image.png"),
-                                                radius: AppSizes.r15,
+                                          borderRadius: BorderRadius.circular(AppSizes.r8),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned.fill(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(AppSizes.pw12),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              article.title,
+                                              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                                                color: Theme.of(context).primaryColorLight,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: AppSizes.sp14,
                                               ),
-                                              SizedBox(width: AppSizes.w4),
-                                              Expanded(
-                                                child: Text(
-                                                  (article.author == "") ? "Unknown" : article.author,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            SizedBox(height: AppSizes.h4),
+                                            Row(
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundImage: (article.urlToImage != "")
+                                                      ? NetworkImage(article.urlToImage)
+                                                      : AssetImage("assets/images/background_home_image.png"),
+                                                  radius: AppSizes.r15,
+                                                ),
+                                                SizedBox(width: AppSizes.w4),
+                                                Expanded(
+                                                  child: Text(
+                                                    (article.author == "") ? "Unknown" : article.author,
+                                                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                                      color: Theme.of(context).primaryColorLight,
+                                                      fontWeight: FontWeight.w400,
+                                                      fontSize: AppSizes.sp12,
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                SizedBox(width: AppSizes.w4),
+                                                Text(
+                                                  article.publishedAt.getDifferenceFormateDateTime(),
                                                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                                     color: Theme.of(context).primaryColorLight,
                                                     fontWeight: FontWeight.w400,
-                                                    fontSize: AppSizes.sp12,
                                                   ),
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
                                                 ),
-                                              ),
-                                              SizedBox(width: AppSizes.w4),
-                                              Text(
-                                                article.publishedAt.getDifferenceFormateDateTime(),
-                                                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                                  color: Theme.of(context).primaryColorLight,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             },
                           ),
