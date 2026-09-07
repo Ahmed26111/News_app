@@ -40,6 +40,7 @@ class SearchScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final model = controller.newsEveryThingArticles[index];
                           return ListTile(
+                            contentPadding : EdgeInsets.symmetric(horizontal: AppSizes.pw16 , vertical: AppSizes.ph8),
                             leading: Icon(
                               Icons.search,
                               color: Theme.of(context).textTheme.bodyLarge?.color,

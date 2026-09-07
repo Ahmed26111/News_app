@@ -166,15 +166,14 @@ ThemeData lightTheme(BuildContext context) {
     //     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
     //     extendedTextStyle: TextStyle(fontSize: AppSizes.sp14, fontWeight: FontWeight.w500),
     //   ),
-    //   listTileTheme: ListTileThemeData(
-    //     contentPadding: EdgeInsets.zero,
-    //     titleTextStyle: TextStyle(
-    //       color: Color(0xFF161F1B),
-    //       fontWeight: FontWeight.w400,
-    //       fontSize: AppSizes.sp16,
-    //     ),
-    //     iconColor: Color(0xFF3A4640),
-    //   ),
+    listTileTheme: ListTileThemeData(
+        contentPadding: EdgeInsets.zero,
+        titleTextStyle: TextStyle(
+          color: LightColorConstant.textPrimaryColor,
+          fontWeight: FontWeight.w400,
+          fontSize: AppSizes.sp16,
+        ),
+      ),
     dividerTheme: DividerThemeData(color: LightColorConstant.borderColor, thickness: 1),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: LightColorConstant.scaffoldBackgroundColor,
