@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_sizes.dart';
-import 'package:news_app/core/theme/light_color_constant.dart';
-
 import '../../../core/data_source/local_data/shared_preferences_keys.dart';
 import '../../../core/data_source/local_data/shared_preferences_manager.dart';
 import '../../../core/utils/utility.dart';
@@ -38,58 +36,49 @@ class _PersonalInfoModalBottomSheetState extends State<PersonalInfoModalBottomSh
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.7,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(AppSizes.r16)),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(height: AppSizes.h16,),
-                Center(
-                  child: SizedBox(
-                    height: AppSizes.h4,
-                    width: AppSizes.w32,
-                    child: Divider(
-                      color: LightColorConstant.textSecondaryColor,
-                      radius: BorderRadius.circular(AppSizes.r100),
-                      thickness: 4,
-                    ),
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(AppSizes.r16)),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SizedBox(height: AppSizes.h16,),
+                  Text("Profile Info", style: Theme.of(context).textTheme.labelSmall),
+                  SizedBox(height: AppSizes.h24),
+                  CustomTextFormField(
+                    controller: _usernameController,
+                    hintText: "e.g. Sarah Khalid",
+                    title: "Username",
+                    validator: _usernameValidator,
                   ),
-                ),
-                SizedBox(height: AppSizes.h32,),
-                Text("Profile Info", style: Theme.of(context).textTheme.labelSmall),
-                SizedBox(height: AppSizes.h24),
-                CustomTextFormField(
-                  controller: _usernameController,
-                  hintText: "e.g. Sarah Khalid",
-                  title: "Username",
-                  validator: _usernameValidator,
-                ),
-                SizedBox(height: AppSizes.h12),
-                CustomTextFormField(
-                  controller: _emailController,
-                  hintText: "usama@gmail.com",
-                  title: "Email",
-                  validator: _emailValidator,
-                ),
-                SizedBox(height: AppSizes.h24),
-                FilledButton(
-                    onPressed: (){
-                      _saveUserData();
-                    },
-                    child: Text("Save")
-                ),
-              ],
+                  SizedBox(height: AppSizes.h12),
+                  CustomTextFormField(
+                    controller: _emailController,
+                    hintText: "usama@gmail.com",
+                    title: "Email",
+                    validator: _emailValidator,
+                  ),
+                  SizedBox(height: AppSizes.h24),
+                  FilledButton(
+                      onPressed: (){
+                        _saveUserData();
+                      },
+                      child: Text("Save")
+                  ),
+                  SizedBox(height: AppSizes.h24),
+                ],
+              ),
             ),
           ),
         ),

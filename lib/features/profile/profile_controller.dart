@@ -9,10 +9,13 @@ import '../../core/mixins/safe_notifier_mixin.dart';
 class ProfileController extends ChangeNotifier with SafeNotifier {
   File? selectedImage;
   String? username;
+  String? countryName;
+
 
   ProfileController() {
     loadSelectedImage();
     loadUsername();
+    loadCountryName();
   }
 
   void loadSelectedImage() {
@@ -24,6 +27,16 @@ class ProfileController extends ChangeNotifier with SafeNotifier {
 
   void loadUsername() {
     username = SharedPreferencesManager().getString(SharedPreferencesKeys.username);
+    notifyListeners();
+  }
+
+  void loadCountryName(){
+    countryName = SharedPreferencesManager().getString(SharedPreferencesKeys.countryName);
+  }
+
+  void changeCountryName(String name) async {
+    countryName = name;
+    await SharedPreferencesManager().setString(SharedPreferencesKeys.countryName, name);
     notifyListeners();
   }
 

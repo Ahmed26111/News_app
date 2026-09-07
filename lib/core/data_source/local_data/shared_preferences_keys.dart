@@ -5,4 +5,5 @@ abstract class SharedPreferencesKeys{
   static const String userPassword = "userPassword";
   static const String username = "username";
   static const String imageKey = "imageKey";
+  static const String countryName = "countryName";
 }
