@@ -43,6 +43,7 @@ class AppSizes {
   static final double h204 = 204.h;
   static final double h250 = 250.h;
   static final double h300 = 300.h;
+  static final double h832 = 832.h;
 
   /// Width
   static final double w2 = 2.w;
@@ -66,6 +67,7 @@ class AppSizes {
   static final double w200 = 200.w;
   static final double w216 = 216.w;
   static final double w235 = 235.w;
+  static final double w375 = 375.w;
 
   /// Padding Height
   static final double ph2 = 2.h;
@@ -110,5 +112,4 @@ class AppSizes {
   static final double r30 = 30.r;
   static final double r60 = 60.r;
   static final double r100 = 100.r;
-
 }

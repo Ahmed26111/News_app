@@ -8,22 +8,23 @@ import '../../core/mixins/safe_notifier_mixin.dart';
 
 class ProfileController extends ChangeNotifier with SafeNotifier {
   File? selectedImage;
-  String? userEmail;
+  String? username;
 
   ProfileController() {
-    _loadSelectedImage();
-    _loadUserEmail();
+    loadSelectedImage();
+    loadUsername();
   }
 
-  void _loadSelectedImage() {
+  void loadSelectedImage() {
     final String? imagePath = SharedPreferencesManager().getString(SharedPreferencesKeys.imageKey);
     if (imagePath != null) {
       selectedImage = File(imagePath);
     }
   }
 
-  void _loadUserEmail() {
-    userEmail = SharedPreferencesManager().getString(SharedPreferencesKeys.userEmail);
+  void loadUsername() {
+    username = SharedPreferencesManager().getString(SharedPreferencesKeys.username);
+    notifyListeners();
   }
 
   Future<void> changeSelectedImage(ImageSource source) async {

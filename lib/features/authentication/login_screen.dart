@@ -44,90 +44,92 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/background_image.png"),
-              fit: BoxFit.fill,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            width: AppSizes.w375,
+            height: AppSizes.h832,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/background_image.png"),
+                fit: BoxFit.fill,
+              ),
             ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                    child: Image.asset(
-                      "assets/images/logo_image.png",
-                      height: AppSizes.h46,
-                    ),
-                  ),
-                  SizedBox(height: AppSizes.h24),
-                  Text(
-                    "Welcome to News",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  SizedBox(height: AppSizes.h16),
-                  CustomTextFormField(
-                    controller: _emailController,
-                    hintText: "usama@gmail.com",
-                    title: "Email",
-                    validator: _emailValidator,
-                  ),
-                  SizedBox(height: AppSizes.h12),
-                  CustomTextFormField(
-                    controller: _passwordController,
-                    hintText: "*************",
-                    title: "Password",
-                    isObscureText: true,
-                    validator: _passwordValidator,
-                  ),
-                  SizedBox(height: AppSizes.h20),
-                  if(errorMessage != null)
-                    Padding(
-                      padding: EdgeInsets.all(AppSizes.pw12),
-                      child: Text(
-                        errorMessage!,
-                        style: TextStyle(color: Colors.red),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        "assets/images/logo_image.png",
+                        height: AppSizes.h46,
                       ),
                     ),
-                  FilledButton(
-                      onPressed: () {
-                        if(_formKey.currentState?.validate() ?? false){
-                           _login();
-                        }
-                      },
-                      child: isLoading ? CircularProgressIndicator(color: Theme.of(context).secondaryHeaderColor,) : Text("Sign In"),
-                  ),
-                  SizedBox(height: AppSizes.h24),
-                  Center(
-                    child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "Don't have an account ?",
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
-                            TextSpan(
-                                text: "  Sign Up",
-                                style: Theme
-                                    .of(context)
-                                    .textTheme
-                                    .labelSmall
-                                    ?.copyWith(color: Theme.of(context).primaryColor,),
-                                recognizer: _signInTapGestureRecognizer,
-                            )
-                          ],
-                        ),
+                    SizedBox(height: AppSizes.h24),
+                    Text(
+                      "Welcome to News",
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                  ),
-                ],
+                    SizedBox(height: AppSizes.h16),
+                    CustomTextFormField(
+                      controller: _emailController,
+                      hintText: "usama@gmail.com",
+                      title: "Email",
+                      validator: _emailValidator,
+                    ),
+                    SizedBox(height: AppSizes.h12),
+                    CustomTextFormField(
+                      controller: _passwordController,
+                      hintText: "*************",
+                      title: "Password",
+                      isObscureText: true,
+                      validator: _passwordValidator,
+                    ),
+                    SizedBox(height: AppSizes.h20),
+                    if(errorMessage != null)
+                      Padding(
+                        padding: EdgeInsets.all(AppSizes.pw12),
+                        child: Text(
+                          errorMessage!,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    FilledButton(
+                        onPressed: () {
+                          if(_formKey.currentState?.validate() ?? false){
+                             _login();
+                          }
+                        },
+                        child: isLoading ? CircularProgressIndicator(color: Theme.of(context).secondaryHeaderColor,) : Text("Sign In"),
+                    ),
+                    SizedBox(height: AppSizes.h24),
+                    Center(
+                      child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Don't have an account ?",
+                                style: Theme.of(context).textTheme.labelSmall,
+                              ),
+                              TextSpan(
+                                  text: "  Sign Up",
+                                  style: Theme
+                                      .of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(color: Theme.of(context).primaryColor,),
+                                  recognizer: _signInTapGestureRecognizer,
+                              )
+                            ],
+                          ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -173,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
       isLoading = true;
       errorMessage = null;
     });
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 1));
 
     final String? email = SharedPreferencesManager().getString(SharedPreferencesKeys.userEmail);
     final String? password = SharedPreferencesManager().getString(SharedPreferencesKeys.userPassword);

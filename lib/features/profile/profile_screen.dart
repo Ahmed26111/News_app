@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import '../../core/constants/app_sizes.dart';
 import '../../core/data_source/local_data/shared_preferences_keys.dart';
 import '../authentication/login_screen.dart';
+import 'components/personal_info_modal_bottom_sheet.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -57,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(height: AppSizes.h4),
                   Center(
-                    child: Text(controller.userEmail ?? "Unknown User", style: Theme.of(context).textTheme.labelLarge),
+                    child: Text(controller.username ?? "Unknown User", style: Theme.of(context).textTheme.labelLarge),
                   ),
                   SizedBox(height: AppSizes.h16),
                   Text("Profile Info", style: Theme.of(context).textTheme.labelSmall),
@@ -66,7 +67,18 @@ class ProfileScreen extends StatelessWidget {
                     context: context,
                     leadingIconPath: "assets/images/person_Icon.svg",
                     title: "Personal Info",
-                    onTap: () {},
+                    onTap: () {
+                      showModalBottomSheet(
+                          context: context,
+                          isDismissible: false,
+                          isScrollControlled: true,
+                          builder: (BuildContext context) {
+                            return PersonalInfoModalBottomSheet();
+                          },
+                      ).then((value){
+                        controller.loadUsername();
+                      });
+                    },
                   ),
                   ..._buildListTile(
                     context: context,
@@ -92,7 +104,6 @@ class ProfileScreen extends StatelessWidget {
                     title: "Logout",
                     onTap: () async {
                       await SharedPreferencesManager().setBool(SharedPreferencesKeys.loginCompleted , false);
-                      await SharedPreferencesManager().remove(SharedPreferencesKeys.imageKey);
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
