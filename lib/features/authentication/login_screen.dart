@@ -178,15 +178,12 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     await Future.delayed(Duration(seconds: 1));
 
-    // final String? email = SharedPreferencesManager().getString(SharedPreferencesKeys.userEmail);
-    final String? email = UserRepository().getCurrentUser()?.email;
-    // final String? password = SharedPreferencesManager().getString(SharedPreferencesKeys.userPassword);
-    final String? password = UserRepository().getCurrentUser()?.password;
+    final String? error = UserRepository().login(email: _emailController.text, password: _passwordController.text);
 
-    if(email == null || password == null || (email != _emailController.text || password != _passwordController.text) ){
+    if(error != null){
       setState(() {
         isLoading = false;
-        errorMessage = "User Not Found";
+        errorMessage = error;
       });
     }else{
       setState(() {

@@ -16,7 +16,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -27,14 +26,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
-  String ?errorMessage;
+  String? errorMessage;
 
   @override
   void initState() {
     super.initState();
-    _signUpTapGestureRecognizer = TapGestureRecognizer()..onTap = () {
-      Navigator.pop(context);
-    };
+    _signUpTapGestureRecognizer = TapGestureRecognizer()
+      ..onTap = () {
+        Navigator.pop(context);
+      };
   }
 
   @override
@@ -52,10 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             width: AppSizes.w375,
             height: AppSizes.h832,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/background_image.png"),
-                fit: BoxFit.fill,
-              ),
+              image: DecorationImage(image: AssetImage("assets/images/background_image.png"), fit: BoxFit.fill),
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
@@ -65,17 +62,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Image.asset(
-                        "assets/images/logo_image.png",
-                        height: AppSizes.h46,
-                      ),
-                    ),
+                    Center(child: Image.asset("assets/images/logo_image.png", height: AppSizes.h46)),
                     SizedBox(height: AppSizes.h24),
-                    Text(
-                      "Welcome to News",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
+                    Text("Welcome to News", style: Theme.of(context).textTheme.titleMedium),
                     SizedBox(height: AppSizes.h16),
                     CustomTextFormField(
                       controller: _usernameController,
@@ -107,40 +96,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       validator: _confirmPasswordValidator,
                     ),
                     SizedBox(height: AppSizes.h20),
-                    if(errorMessage != null)
+                    if (errorMessage != null)
                       Padding(
                         padding: EdgeInsets.all(AppSizes.pw12),
-                        child: Text(
-                          errorMessage!,
-                          style: TextStyle(color: Colors.red),
-                        ),
+                        child: Text(errorMessage!, style: TextStyle(color: Colors.red)),
                       ),
                     FilledButton(
                       onPressed: () {
-                        if(_formKey.currentState?.validate() ?? false){
+                        if (_formKey.currentState?.validate() ?? false) {
                           _register();
                         }
                       },
-                      child: isLoading ? CircularProgressIndicator(color: Theme.of(context).secondaryHeaderColor,) : Text("Sign Up"),
+                      child: isLoading
+                          ? CircularProgressIndicator(color: Theme.of(context).secondaryHeaderColor)
+                          : Text("Sign Up"),
                     ),
                     SizedBox(height: AppSizes.h24),
                     Center(
                       child: RichText(
                         text: TextSpan(
                           children: [
-                            TextSpan(
-                              text: "Have an account ?",
-                              style: Theme.of(context).textTheme.labelSmall,
-                            ),
+                            TextSpan(text: "Have an account ?", style: Theme.of(context).textTheme.labelSmall),
                             TextSpan(
                               text: "  Sign In",
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(color: Theme.of(context).primaryColor,),
+                              style: Theme.of(
+                                context,
+                              ).textTheme.labelSmall?.copyWith(color: Theme.of(context).primaryColor),
                               recognizer: _signUpTapGestureRecognizer,
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -154,50 +137,50 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   String? _emailValidator(String? value) {
-    if(value == null || value.isEmpty){
+    if (value == null || value.isEmpty) {
       return "Email is required";
-    }else if(!Utility.isValidEmail(value)){
+    } else if (!Utility.isValidEmail(value)) {
       return "Invalid email";
-    }else{
+    } else {
       return null;
     }
   }
 
   String? _passwordValidator(String? value) {
-    if(value == null || value.isEmpty){
+    if (value == null || value.isEmpty) {
       return "Password is required";
-    }else if(!Utility.isValidPassword(value)){
-      if(!Utility.isContainSpecialCharacter(value)){
+    } else if (!Utility.isValidPassword(value)) {
+      if (!Utility.isContainSpecialCharacter(value)) {
         return "Password must contain special character";
-      }else if(!Utility.isContainLowerCaseCharacter(value)){
+      } else if (!Utility.isContainLowerCaseCharacter(value)) {
         return "Password must contain lower case character";
-      }else if(!Utility.isContainUpperCaseCharacter(value)){
+      } else if (!Utility.isContainUpperCaseCharacter(value)) {
         return "Password must contain upper case character";
-      }
-      else if(!Utility.isContainDigitCharacter(value)){
+      } else if (!Utility.isContainDigitCharacter(value)) {
         return "Password must contain digit character";
-      }else if(!Utility.hasMinLength(value)){
+      } else if (!Utility.hasMinLength(value)) {
         return "Password must be at least 8 characters long";
       }
       return "Invalid password";
-    }else{
+    } else {
       return null;
     }
   }
 
   String? _confirmPasswordValidator(String? value) {
-     if(value != _passwordController.text){
-       return "Password does not match";
-     }else{
-       return null;
-     }
+    if (value != _passwordController.text) {
+      return "Password does not match";
+    } else {
+      return null;
+    }
   }
 
   String? _usernameValidator(String? value) {
-    if(value == null || value.trim().isEmpty){
+    if (value == null || value.trim().isEmpty) {
       return "Username is required";
-    }else{
+    } else {
       return null;
     }
   }
@@ -209,39 +192,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
     await Future.delayed(Duration(seconds: 1));
 
-    // final String? email = SharedPreferencesManager().getString(SharedPreferencesKeys.userEmail);
-    final String? email = UserRepository().getCurrentUser()?.email;
+    final String? error = await UserRepository().signUp(
+      name: _usernameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
 
-
-    if(email != null && email == _emailController.text){
+    if (error != null) {
       setState(() {
         isLoading = false;
-        errorMessage = "User Already Exists";
+        errorMessage = error;
       });
-    }
-    else{
-      await UserRepository().removeCurrentUser();
-      await UserRepository().addCurrentUser(
-        name: _usernameController.text,
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
+    } else {
       await SharedPreferencesManager().setBool(SharedPreferencesKeys.loginCompleted, true);
-
-      // await SharedPreferencesManager().setString(SharedPreferencesKeys.userEmail, _emailController.text);
-      // await SharedPreferencesManager().setString(SharedPreferencesKeys.userPassword, _passwordController.text);
-      // await SharedPreferencesManager().setString(SharedPreferencesKeys.username, _usernameController.text);
-      // await SharedPreferencesManager().remove(SharedPreferencesKeys.imageKey);
 
       setState(() {
         isLoading = false;
         errorMessage = null;
       });
 
-      if(context.mounted){
+      if (context.mounted) {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
       }
     }
   }
-
 }

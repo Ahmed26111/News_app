@@ -63,4 +63,31 @@ class UserRepository {
   UserModel? getCurrentUser() {
     return _userBox.get(HiveConstants.currentUserKey);
   }
+
+  String? login({required String email, required String password}){
+    final UserModel? user = getCurrentUser();
+    if(user == null){
+      return "User Not Found";
+    }else if(user.email == email && user.password == password){
+      return null;
+    }else{
+      return "User Not Found";
+    }
+  }
+
+  Future<String?> signUp({required String name, required String email, required String password}) async {
+    final UserModel? user = getCurrentUser();
+    if(user == null){
+      await addCurrentUser(name: name, email: email, password: password);
+      return null;
+    }else{
+      if(user.email == email){
+        return "User Already Exists";
+      }else{
+        await removeCurrentUser();
+        await addCurrentUser(name: name, email: email, password: password);
+        return null;
+      }
+    }
+  }
 }
