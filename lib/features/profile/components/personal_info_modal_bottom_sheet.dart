@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/app_sizes.dart';
-import '../../../core/data_source/local_data/shared_preferences_keys.dart';
-import '../../../core/data_source/local_data/shared_preferences_manager.dart';
+import 'package:news_app/core/data_source/local_data/user_repository.dart';
 import '../../../core/utils/utility.dart';
 import '../../../core/widgets/custom_text_form_field.dart';
 
@@ -22,14 +21,16 @@ class _PersonalInfoModalBottomSheetState extends State<PersonalInfoModalBottomSh
   @override
   void initState() {
     super.initState();
-    _usernameController.text = SharedPreferencesManager().getString(SharedPreferencesKeys.username) ?? "";
-    _emailController.text = SharedPreferencesManager().getString(SharedPreferencesKeys.userEmail) ?? "";
+    _usernameController.text = UserRepository().getCurrentUser()?.name ?? "";
+    _emailController.text = UserRepository().getCurrentUser()?.email ?? "";
   }
 
-  void _saveUserData(){
+  Future<void> _saveUserData() async {
     if(_formKey.currentState?.validate() ?? false){
-      SharedPreferencesManager().setString(SharedPreferencesKeys.username, _usernameController.text);
-      SharedPreferencesManager().setString(SharedPreferencesKeys.userEmail, _emailController.text);
+      await UserRepository().updateCurrentUser(
+        name: _usernameController.text,
+        email: _emailController.text,
+      );
       Navigator.pop(context);
     }
   }

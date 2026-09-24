@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:news_app/core/data_source/local_data/user_repository.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../core/data_source/local_data/shared_preferences_keys.dart';
-import '../../core/data_source/local_data/shared_preferences_manager.dart';
-import '../../core/mixins/safe_notifier_mixin.dart';
+import '../../core/mixins/safe_notif'
+    'ier_mixin.dart';
 
 class ProfileController extends ChangeNotifier with SafeNotifier {
   File? selectedImage;
@@ -19,24 +19,24 @@ class ProfileController extends ChangeNotifier with SafeNotifier {
   }
 
   void loadSelectedImage() {
-    final String? imagePath = SharedPreferencesManager().getString(SharedPreferencesKeys.imageKey);
+    final String? imagePath = UserRepository().getCurrentUser()?.image;
     if (imagePath != null) {
       selectedImage = File(imagePath);
     }
   }
 
   void loadUsername() {
-    username = SharedPreferencesManager().getString(SharedPreferencesKeys.username);
+    username = UserRepository().getCurrentUser()?.name;
     notifyListeners();
   }
 
   void loadCountryName(){
-    countryName = SharedPreferencesManager().getString(SharedPreferencesKeys.countryName);
+    countryName = UserRepository().getCurrentUser()?.country;
   }
 
   void changeCountryName(String name) async {
     countryName = name;
-    await SharedPreferencesManager().setString(SharedPreferencesKeys.countryName, name);
+    await UserRepository().updateCurrentUser(country: name);
     notifyListeners();
   }
 
@@ -52,6 +52,6 @@ class ProfileController extends ChangeNotifier with SafeNotifier {
   void _saveImage(XFile file) async {
     final Directory appDirectory = await getApplicationDocumentsDirectory();
     final File newFile = await File(file.path).copy("${appDirectory.path}/${file.name}");
-    await SharedPreferencesManager().setString(SharedPreferencesKeys.imageKey, newFile.path);
+    await UserRepository().updateCurrentUser(image: newFile.path);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:news_app/core/data_source/local_data/user_repository.dart';
 import 'package:news_app/core/utils/utility.dart';
 import 'package:news_app/core/widgets/custom_text_form_field.dart';
 import 'package:news_app/features/authentication/register_screen.dart';
@@ -177,8 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     await Future.delayed(Duration(seconds: 1));
 
-    final String? email = SharedPreferencesManager().getString(SharedPreferencesKeys.userEmail);
-    final String? password = SharedPreferencesManager().getString(SharedPreferencesKeys.userPassword);
+    // final String? email = SharedPreferencesManager().getString(SharedPreferencesKeys.userEmail);
+    final String? email = UserRepository().getCurrentUser()?.email;
+    // final String? password = SharedPreferencesManager().getString(SharedPreferencesKeys.userPassword);
+    final String? password = UserRepository().getCurrentUser()?.password;
 
     if(email == null || password == null || (email != _emailController.text || password != _passwordController.text) ){
       setState(() {

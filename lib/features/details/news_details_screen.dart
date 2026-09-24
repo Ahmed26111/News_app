@@ -43,7 +43,7 @@ class NewsDetailsScreen extends StatelessWidget {
                     backgroundImage: (articleModel.urlToImage != "")
                         ? NetworkImage(articleModel.urlToImage)
                         : AssetImage("assets/images/background_home_image.png"),
-                    radius: AppSizes.r15,
+                    radius: AppSizes.r20,
                   ),
                   SizedBox(width: AppSizes.w4,),
                   Text(

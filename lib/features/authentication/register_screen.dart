@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/core/data_source/local_data/shared_preferences_manager.dart';
 import '../../core/constants/app_sizes.dart';
 import '../../core/data_source/local_data/shared_preferences_keys.dart';
+import '../../core/data_source/local_data/user_repository.dart';
 import '../../core/utils/utility.dart';
 import '../../core/widgets/custom_text_form_field.dart';
 import '../main/main_screen.dart';
@@ -208,7 +209,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
     await Future.delayed(Duration(seconds: 1));
 
-    final String? email = SharedPreferencesManager().getString(SharedPreferencesKeys.userEmail);
+    // final String? email = SharedPreferencesManager().getString(SharedPreferencesKeys.userEmail);
+    final String? email = UserRepository().getCurrentUser()?.email;
 
 
     if(email != null && email == _emailController.text){
@@ -218,12 +220,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     }
     else{
-
-      await SharedPreferencesManager().setString(SharedPreferencesKeys.userEmail, _emailController.text);
-      await SharedPreferencesManager().setString(SharedPreferencesKeys.userPassword, _passwordController.text);
-      await SharedPreferencesManager().setString(SharedPreferencesKeys.username, _usernameController.text);
+      await UserRepository().removeCurrentUser();
+      await UserRepository().addCurrentUser(
+        name: _usernameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
       await SharedPreferencesManager().setBool(SharedPreferencesKeys.loginCompleted, true);
-      await SharedPreferencesManager().remove(SharedPreferencesKeys.imageKey);
+
+      // await SharedPreferencesManager().setString(SharedPreferencesKeys.userEmail, _emailController.text);
+      // await SharedPreferencesManager().setString(SharedPreferencesKeys.userPassword, _passwordController.text);
+      // await SharedPreferencesManager().setString(SharedPreferencesKeys.username, _usernameController.text);
+      // await SharedPreferencesManager().remove(SharedPreferencesKeys.imageKey);
 
       setState(() {
         isLoading = false;
