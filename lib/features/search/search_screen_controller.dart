@@ -3,7 +3,7 @@ import 'package:news_app/core/mixins/safe_notifier_mixin.dart';
 
 import '../../core/enum/request_status_enum.dart';
 import '../../core/repos/news_repository.dart';
-import '../home/ models/news_article_model.dart';
+import '../../core/model/news_article_model.dart';
 
 class SearchScreenController extends ChangeNotifier with SafeNotifier {
   List<NewsArticleModel> newsEveryThingArticles = [];

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/extensions/date_time_extension.dart';
 import 'package:news_app/core/widgets/custom_cached_network_image.dart';
-import 'package:news_app/features/home/%20models/news_article_model.dart';
+import 'package:news_app/core/model/news_article_model.dart';
+import 'package:news_app/core/controller/bookmark_controller.dart';
+import 'package:provider/provider.dart';
 
-import '../../../core/constants/app_sizes.dart';
-import '../../../core/widgets/custom_svg_picture_asset.dart';
-import '../../details/news_details_screen.dart';
+import '../constants/app_sizes.dart';
+import '../widgets/custom_svg_picture_asset.dart';
+import '../../features/details/news_details_screen.dart';
 
 class NewsArticleWidget extends StatelessWidget {
   const NewsArticleWidget({super.key, required this.articleModel});
@@ -68,11 +70,23 @@ class NewsArticleWidget extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Spacer(),
-                    IconButton(
-                        onPressed: (){},
-                        icon: CustomSvgPictureAsset(
-                            path: "assets/images/bookmark_icon.svg"
-                        ),
+                    Consumer<BookmarkController>(
+                      builder: (context, bookmarkController, child) {
+                        final isBookmarked = bookmarkController.isBookmarked(articleModel.url);
+                        return IconButton(
+                          onPressed: () {
+                            bookmarkController.toggleBookmark(articleModel);
+                          },
+                          icon: isBookmarked
+                              ? CustomSvgPictureAsset.withColorFilter(
+                                  path: "assets/images/bookmark_icon.svg",
+                                  color: Theme.of(context).primaryColor,
+                                )
+                              : CustomSvgPictureAsset(
+                                  path: "assets/images/bookmark_icon.svg",
+                                ),
+                        );
+                      },
                     ),
                   ],
                 )
@@ -95,5 +109,4 @@ class NewsArticleWidget extends StatelessWidget {
       return author;
     }
   }
-
 }

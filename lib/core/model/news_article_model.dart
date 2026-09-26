@@ -1,12 +1,23 @@
+import 'package:hive_ce_flutter/adapters.dart';
 import 'package:news_app/core/extensions/date_time_extension.dart';
 
+part 'news_article_model.g.dart';
+
+@HiveType(typeId: 1)
 class NewsArticleModel {
+  @HiveField(0)
   final String author;
+  @HiveField(1)
   final String title;
+  @HiveField(2)
   final String description;
+  @HiveField(3)
   final String url;
+  @HiveField(4)
   final String urlToImage;
+  @HiveField(5)
   final DateTime publishedAt;
+  @HiveField(6)
   final String content;
 
   NewsArticleModel({
@@ -38,7 +49,7 @@ class NewsArticleModel {
       description: json["description"] ?? "",
       url: json["url"] ?? "",
       urlToImage: json["urlToImage"] ?? "",
-      publishedAt: DateTime.tryParse(json["publishedAt"]) ?? DateTime.now(),
+      publishedAt: DateTime.tryParse(json["publishedAt"] ?? "") ?? DateTime.now(),
       content: json["content"] ?? "",
     );
   }

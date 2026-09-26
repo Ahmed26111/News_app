@@ -3,8 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:news_app/core/data_source/local_data/user_repository.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../core/mixins/safe_notif'
-    'ier_mixin.dart';
+import '../../core/mixins/safe_notifier_mixin.dart';
 
 class ProfileController extends ChangeNotifier with SafeNotifier {
   File? selectedImage;

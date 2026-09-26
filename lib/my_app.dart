@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/core/theme/light_theme.dart';
+import 'package:provider/provider.dart';
+import 'core/controller/bookmark_controller.dart';
 import 'features/splash/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -13,10 +15,13 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 832),
       minTextAdapt: true,
       builder: (context , _){
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: lightTheme(context),
-          home: const SplashScreen(),
+        return ChangeNotifierProvider<BookmarkController>(
+          create: (BuildContext context) => BookmarkController(),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme(context),
+            home: const SplashScreen(),
+          ),
         );
       },
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/enum/request_status_enum.dart';
-import 'package:news_app/features/home/components/news_article_widget.dart';
+import 'package:news_app/core/components/news_article_widget.dart';
 import 'package:news_app/features/home/home_controller.dart';
 import 'package:provider/provider.dart';
 
