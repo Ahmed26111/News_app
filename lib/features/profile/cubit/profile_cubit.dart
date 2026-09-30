@@ -1,17 +1,14 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:news_app/core/data_source/local_data/user_repository.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../core/mixins/safe_notifier_mixin.dart';
 
-class ProfileController extends ChangeNotifier with SafeNotifier {
-  File? selectedImage;
-  String? username;
-  String? countryName;
+import '../../../core/data_source/local_data/user_repository.dart';
+part 'profile_state.dart';
 
-
-  ProfileController() {
+class ProfileCubit extends Cubit<ProfileState> {
+  ProfileCubit() : super(const ProfileState()){
     loadSelectedImage();
     loadUsername();
     loadCountryName();
@@ -20,31 +17,38 @@ class ProfileController extends ChangeNotifier with SafeNotifier {
   void loadSelectedImage() {
     final String? imagePath = UserRepository().getCurrentUser()?.image;
     if (imagePath != null) {
-      selectedImage = File(imagePath);
+      emit(state.copyWith(
+        selectedImage: File(imagePath),
+      ));
     }
   }
 
   void loadUsername() {
-    username = UserRepository().getCurrentUser()?.name;
-    notifyListeners();
+    emit(state.copyWith(
+      username: UserRepository().getCurrentUser()?.name
+    ));
   }
 
   void loadCountryName(){
-    countryName = UserRepository().getCurrentUser()?.country;
+    emit(state.copyWith(
+      countryName: UserRepository().getCurrentUser()?.country
+    ));
   }
 
   void changeCountryName(String name) async {
-    countryName = name;
+    emit(state.copyWith(
+        countryName: name
+    ));
     await UserRepository().updateCurrentUser(country: name);
-    notifyListeners();
   }
 
   Future<void> changeSelectedImage(ImageSource source) async {
     final XFile? imageFile = await ImagePicker().pickImage(source: source);
     if (imageFile != null) {
-      selectedImage = File(imageFile.path);
+      emit(state.copyWith(
+        selectedImage: File(imageFile.path),
+      ));
       _saveImage(imageFile);
-      notifyListeners();
     }
   }
 

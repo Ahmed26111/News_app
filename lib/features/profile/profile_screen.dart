@@ -1,11 +1,12 @@
+
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:news_app/core/data_source/local_data/shared_preferences_manager.dart';
 import 'package:news_app/core/theme/light_color_constant.dart';
 import 'package:news_app/core/widgets/custom_svg_picture_asset.dart';
-import 'package:news_app/features/profile/profile_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/features/profile/cubit/profile_cubit.dart';
 import '../../core/constants/app_sizes.dart';
 import '../../core/data_source/local_data/shared_preferences_keys.dart';
 import '../authentication/login_screen.dart';
@@ -16,12 +17,13 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ProfileController(),
+    return BlocProvider<ProfileCubit>(
+      create: (_) => ProfileCubit(),
       child: Scaffold(
         appBar: AppBar(title: Text("Profile")),
-        body: Consumer<ProfileController>(
-          builder: (BuildContext context, ProfileController controller, _) {
+        body: BlocBuilder<ProfileCubit , ProfileState>(
+          builder: (BuildContext context,  state){
+            final controller = context.read<ProfileCubit>();
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
@@ -33,9 +35,9 @@ class ProfileScreen extends StatelessWidget {
                       child: Stack(
                         children: [
                           CircleAvatar(
-                            backgroundImage: (controller.selectedImage == null)
+                            backgroundImage: (state.selectedImage == null)
                                 ? AssetImage("assets/images/profile.png")
-                                : FileImage(controller.selectedImage!),
+                                : FileImage(state.selectedImage!),
                             radius: AppSizes.r60,
                             backgroundColor: Colors.transparent,
                           ),
@@ -60,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: AppSizes.h4),
                     Center(
-                      child: Text(controller.username ?? "Unknown User", style: Theme.of(context).textTheme.labelLarge),
+                      child: Text(state.username ?? "Unknown User", style: Theme.of(context).textTheme.labelLarge),
                     ),
                     SizedBox(height: AppSizes.h16),
                     Text("Profile Info", style: Theme.of(context).textTheme.labelSmall),
@@ -92,7 +94,7 @@ class ProfileScreen extends StatelessWidget {
                     ..._buildListTile(
                       context: context,
                       leadingIconPath: "assets/images/Country_Icon.svg",
-                      title: controller.countryName ?? "Country",
+                      title: state.countryName ?? "Country",
                       onTap: () {
                         showCountryPicker(
                           context: context,
@@ -191,6 +193,7 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _showImageSourceDialog(BuildContext context) {
+    final controller = context.read<ProfileCubit>();
     showDialog(
       context: context,
       builder: (dialogContext) => SimpleDialog(
@@ -201,7 +204,7 @@ class ProfileScreen extends StatelessWidget {
           SimpleDialogOption(
             onPressed: () async {
               Navigator.pop(dialogContext);
-              await context.read<ProfileController>().changeSelectedImage(ImageSource.camera);
+              await controller.changeSelectedImage(ImageSource.camera);
             },
             child: Row(
               children: [
@@ -214,7 +217,7 @@ class ProfileScreen extends StatelessWidget {
           SimpleDialogOption(
             onPressed: () async {
               Navigator.pop(dialogContext);
-              await context.read<ProfileController>().changeSelectedImage(ImageSource.gallery);
+              await controller.changeSelectedImage(ImageSource.gallery);
             },
             child: Row(
               children: [

@@ -11,6 +11,5 @@ void main() async{
   await ScreenUtil.ensureScreenSize();
   await UserRepository().init();
   await BookmarkRepository().init();
-  // SharedPreferencesManager().clear();
   runApp(const MyApp());
 }
