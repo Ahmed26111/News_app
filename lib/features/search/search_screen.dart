@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/enum/request_status_enum.dart';
 import 'package:news_app/core/theme/light_color_constant.dart';
 import 'package:news_app/core/widgets/custom_shimmer_from_colors.dart';
 import 'package:news_app/core/widgets/custom_text_field.dart';
-import 'package:news_app/features/search/search_screen_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/features/search/cubit/search_cubit.dart';
 import '../../core/constants/app_sizes.dart';
 import '../../core/data_source/remote_data/api_service.dart';
 import '../../core/repos/news_repository.dart';
@@ -17,10 +17,11 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Search")),
-      body: ChangeNotifierProvider(
-        create: (_) => SearchScreenController(newsRepository: NewsRepository(apiService: ApiService())),
-        child: Consumer<SearchScreenController>(
-          builder: (BuildContext context, SearchScreenController controller, _) {
+      body: BlocProvider<SearchCubit>(
+        create: (_) => SearchCubit(NewsRepository(apiService: ApiService())),
+        child: BlocBuilder<SearchCubit , SearchState>(
+          builder: (BuildContext context, state) {
+            final controller = context.read<SearchCubit>();
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16, vertical: AppSizes.ph20),
               child: Column(
@@ -32,14 +33,14 @@ class SearchScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: AppSizes.h10,),
-                  switch(controller.everythingRequestStatus){
+                  switch(state.everythingRequestStatus){
                     RequestStatusEnum.eLoading => _buildSearchResultShimmer(),
                     RequestStatusEnum.eLoaded => Expanded(
                       child: ListView.separated(
-                        itemCount: controller.newsEveryThingArticles.length,
+                        itemCount: state.newsEveryThingArticles.length,
                         separatorBuilder: (BuildContext context, int index) => Divider(),
                         itemBuilder: (context, index) {
-                          final model = controller.newsEveryThingArticles[index];
+                          final model = state.newsEveryThingArticles[index];
                           return ListTile(
                             onTap: (){
                               Navigator.push(
@@ -66,7 +67,7 @@ class SearchScreen extends StatelessWidget {
                     RequestStatusEnum.eError => Padding(
                       padding: EdgeInsets.all(AppSizes.pw20),
                       child: Text(
-                          controller.errorMessage!,
+                          state.errorMessage!,
                           style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: AppSizes.sp20),
                       ),
                     ),
