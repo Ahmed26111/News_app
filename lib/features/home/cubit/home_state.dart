@@ -1,6 +1,6 @@
 part of 'home_cubit.dart';
 
-class HomeState {
+class HomeState extends Equatable{
   const HomeState({
     this.newsHeadLineArticles = const [],
     this.newsEveryThingArticles = const [],
@@ -34,4 +34,14 @@ class HomeState {
       topHeadLineRequestStatus: topHeadLineRequestStatus ?? this.topHeadLineRequestStatus,
     );
   }
+
+  @override
+  List<Object?> get props => [
+    newsHeadLineArticles,
+    newsEveryThingArticles,
+    errorMessage,
+    selectedCategory,
+    everythingRequestStatus,
+    topHeadLineRequestStatus,
+  ];
 }

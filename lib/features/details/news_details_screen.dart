@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/core/controller/bookmark_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/extensions/date_time_extension.dart';
 import 'package:news_app/core/theme/light_color_constant.dart';
 import 'package:news_app/core/widgets/custom_svg_picture_asset.dart';
 import 'package:news_app/core/model/news_article_model.dart';
-import 'package:provider/provider.dart';
 
 import '../../core/constants/app_sizes.dart';
+import '../../core/cubit/bookmark_cubit.dart';
 import '../../core/widgets/custom_cached_network_image.dart';
 
 class NewsDetailsScreen extends StatelessWidget {
@@ -62,12 +62,12 @@ class NewsDetailsScreen extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Spacer(),
-                  Consumer<BookmarkController>(
-                    builder: (context, bookmarkController, child) {
-                      final isBookmarked = bookmarkController.isBookmarked(articleModel.url);
+                  BlocBuilder<BookmarkCubit , BookmarkState>(
+                    builder: (context, state) {
+                      final isBookmarked = context.read<BookmarkCubit>().isBookmarked(articleModel.url);
                       return IconButton(
                         onPressed: () {
-                          bookmarkController.toggleBookmark(articleModel);
+                          context.read<BookmarkCubit>().toggleBookmark(articleModel);
                         },
                         icon: isBookmarked
                             ? CustomSvgPictureAsset.withColorFilter(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/core/controller/bookmark_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/components/news_article_widget.dart';
-import 'package:provider/provider.dart';
+
+import '../../core/cubit/bookmark_cubit.dart';
 
 class BookmarkScreen extends StatelessWidget {
   const BookmarkScreen({super.key});
@@ -12,9 +13,9 @@ class BookmarkScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Bookmarks"),
       ),
-      body: Consumer<BookmarkController>(
-        builder: (context, controller, child) {
-          if (controller.bookmarkedArticles.isEmpty) {
+      body: BlocBuilder<BookmarkCubit, BookmarkState>(
+        builder: (context, state) {
+          if (state.bookmarkedArticles.isEmpty) {
             return Center(
               child: Text(
                 "No Bookmarked Articles Yet",
@@ -23,9 +24,9 @@ class BookmarkScreen extends StatelessWidget {
             );
           }
           return ListView.builder(
-            itemCount: controller.bookmarkedArticles.length,
+            itemCount: state.bookmarkedArticles.length,
             itemBuilder: (context, index) {
-              final article = controller.bookmarkedArticles[index];
+              final article = state.bookmarkedArticles[index];
               return NewsArticleWidget(articleModel: article);
             },
           );
