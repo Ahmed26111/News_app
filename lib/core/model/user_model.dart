@@ -29,11 +29,11 @@ class UserModel {
     keyMapper ??= (key) => key;
 
     return {
-      keyMapper('name'): this.name,
-      keyMapper('email'): this.email,
-      keyMapper('password'): this.password,
-      keyMapper('country'): this.country,
-      keyMapper('image'): this.image,
+      keyMapper('name'): name,
+      keyMapper('email'): email,
+      keyMapper('password'): password,
+      keyMapper('country'): country,
+      keyMapper('image'): image,
     };
   }
 

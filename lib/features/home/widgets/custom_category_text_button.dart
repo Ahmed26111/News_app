@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/enum/categories_enum.dart';
-import 'package:news_app/features/home/home_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/features/home/cubit/home_cubit.dart';
 import '../../../core/constants/app_sizes.dart';
 
 class CustomCategoryTextButton extends StatelessWidget {
@@ -11,12 +11,13 @@ class CustomCategoryTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeController>(
-      builder: (BuildContext context, HomeController controller,_) {
-        bool isSelected = controller.selectedCategory == category;
+    return BlocSelector<HomeCubit , HomeState , CategoriesEnum>(
+      selector: (HomeState state) => state.selectedCategory,
+      builder: (BuildContext context, CategoriesEnum selectedCategory) {
+        bool isSelected = selectedCategory == category;
         return TextButton(
           onPressed: (){
-            controller.changeSelectedCategory(category);
+            context.read<HomeCubit>().changeSelectedCategory(category);
           },
           style: TextButton.styleFrom(
             padding: EdgeInsets.zero,

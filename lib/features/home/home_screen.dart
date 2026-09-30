@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/features/home/components/sliver_categories_list_widget.dart';
 import 'package:news_app/features/home/components/sliver_news_articles_list_widget.dart';
 import 'package:news_app/features/home/components/trending_news_widget.dart';
-import 'package:news_app/features/home/home_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/features/home/cubit/home_cubit.dart';
 
 import '../../core/data_source/remote_data/api_service.dart';
 import '../../core/repos/news_repository.dart';
@@ -13,20 +13,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => HomeController(newsRepository: NewsRepository(apiService: ApiService())),
-      child: Consumer<HomeController>(
-        builder: (BuildContext context, HomeController controller, _) {
-          return Scaffold(
-              body: CustomScrollView(
-                  slivers: [
-                    TrendingNewsWidget(),
-                    SliverCategoriesListWidget(),
-                    SliverNewsArticlesListWidget(),
-                  ]
-              ),
-          );
-        },
+    return BlocProvider<HomeCubit>(
+      create: (_) => HomeCubit(newsRepository: NewsRepository(apiService: ApiService())),
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [TrendingNewsWidget(), SliverCategoriesListWidget(), SliverNewsArticlesListWidget()],
+        ),
       ),
     );
   }

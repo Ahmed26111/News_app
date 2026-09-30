@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/enum/categories_enum.dart';
 import 'package:news_app/features/home/categories_screen.dart';
 import 'package:news_app/features/home/components/view_all_widget.dart';
-import 'package:news_app/features/home/home_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/features/home/cubit/home_cubit.dart';
 import '../../../core/constants/app_sizes.dart';
 import '../widgets/custom_category_text_button.dart';
 
@@ -20,8 +20,8 @@ class SliverCategoriesListWidget extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_)=> ChangeNotifierProvider.value(
-                        value: context.read<HomeController>(),
+                      builder: (_)=> BlocProvider.value(
+                        value: context.read<HomeCubit>(),
                         child: CategoriesScreen(),
                       )
                   )

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/core/enum/request_status_enum.dart';
 import 'package:news_app/core/extensions/date_time_extension.dart';
 import 'package:news_app/core/widgets/custom_shimmer_from_colors.dart';
 import 'package:news_app/features/home/components/view_all_widget.dart';
-import 'package:news_app/features/home/home_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:news_app/features/home/cubit/home_cubit.dart';
 
 import '../../../core/constants/app_sizes.dart';
 import '../../../core/widgets/custom_cached_network_image.dart';
@@ -37,19 +37,21 @@ class TrendingNewsWidget extends StatelessWidget {
                   // SizedBox(height: AppSizes.h20),
                   ViewAllWidget(title: "Trending News", onTap: () {}),
                   SizedBox(height: AppSizes.h12),
-                  Consumer<HomeController>(
-                    builder: (BuildContext context, HomeController controller, _) {
-                      return switch (controller.everythingRequestStatus) {
+                  BlocSelector<HomeCubit , HomeState , RequestStatusEnum>(
+                    selector: (HomeState state) => state.everythingRequestStatus,
+                    builder: (BuildContext context, RequestStatusEnum everythingRequestStatus) {
+                      final HomeState state = context.read<HomeCubit>().state;
+                      return switch (everythingRequestStatus) {
                         RequestStatusEnum.eLoading => _buildTrendingNewsShimmer(),
                         RequestStatusEnum.eLoaded => SizedBox(
                           height: AppSizes.h140,
                           child: ListView.separated(
                             padding: EdgeInsets.only(left: AppSizes.pw16),
-                            itemCount: controller.newsEveryThingArticles.take(6).length,
+                            itemCount: state.newsEveryThingArticles.take(6).length,
                             separatorBuilder: (_, _) => SizedBox(width: AppSizes.w12),
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
-                              final article = controller.newsEveryThingArticles[index];
+                              final article = state.newsEveryThingArticles[index];
                               return GestureDetector(
                                 onTap: (){
                                   Navigator.push(
@@ -146,7 +148,7 @@ class TrendingNewsWidget extends StatelessWidget {
                         RequestStatusEnum.eError => Padding(
                           padding: EdgeInsets.only(top: AppSizes.ph20),
                           child: Text(
-                            controller.errorMessage!,
+                            state.errorMessage!,
                             style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: AppSizes.sp20),
                           ),
                         ),
