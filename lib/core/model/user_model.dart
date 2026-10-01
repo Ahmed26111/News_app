@@ -7,20 +7,27 @@ class UserModel {
   @HiveField(0)
   final String name;
   @HiveField(1)
-  final String email;
+  final String? email;
   @HiveField(2)
-  final String password;
+  final String? password;
   @HiveField(3)
   final String? country;
   @HiveField(4)
   final String? image;
+  @HiveField(5)
+  final String? accessToken;
+  @HiveField(6)
+  final String? refreshToken;
+
 
   UserModel({
     required this.name,
-    required this.email,
-    required this.password,
+    this.email,
+    this.password,
     this.country,
     this.image,
+    this.accessToken,
+    this.refreshToken,
   });
 
   Map<String, dynamic> toMap({
@@ -44,12 +51,21 @@ class UserModel {
 
     return UserModel(
       name: map[keyMapper('name')] as String,
-      email: map[keyMapper('email')] as String,
-      password: map[keyMapper('password')] as String,
+      email: map[keyMapper('email')] as String?,
+      password: map[keyMapper('password')] as String?,
       country: map[keyMapper('country')] as String?,
       image: map[keyMapper('image')] as String?,
     );
   }
+
+  factory UserModel.fromAuthResponse(Map<String, dynamic> json){
+    return UserModel(
+      name: json["username"],
+      accessToken: json["accessToken"],
+      refreshToken: json["refreshToken"]
+    );
+  }
+
 
   UserModel copyWith({
     String? name,
@@ -69,6 +85,6 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel{name: $name, email: $email, password: $password, country: $country, image: $image}';
+    return 'UserModel{name: $name, email: $email, password: $password, country: $country, image: $image , accessToken: $accessToken , refreshToken: $refreshToken}';
   }
 }

@@ -15,8 +15,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> login({required String username , required String password})async{
     emit(state.copyWith(status: RequestStatusEnum.eLoading));
     try{
-      await _authRepository.login(username: username, password: password);
-      emit(state.copyWith(status: RequestStatusEnum.eLoaded));
+      final userModel = await _authRepository.login(username: username, password: password);
+      emit(state.copyWith(status: RequestStatusEnum.eLoaded , user: userModel));
     }catch(e){
       emit(state.copyWith(status: RequestStatusEnum.eError , errorMessage: e.toString()));
     }

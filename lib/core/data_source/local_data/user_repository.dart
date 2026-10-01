@@ -40,6 +40,10 @@ class UserRepository {
     await _userBox.put(HiveConstants.currentUserKey, user);
   }
 
+  Future<void> updateUser(UserModel user) async {
+    await _userBox.put(HiveConstants.currentUserKey, user);
+  }
+
   Future<void> removeCurrentUser() async {
     await _userBox.delete(HiveConstants.currentUserKey);
   }

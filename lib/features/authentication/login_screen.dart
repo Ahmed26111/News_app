@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             hintText: "*************",
                             title: "Password",
                             isObscureText: true,
-                            validator: _passwordValidator,
+                            // validator: _passwordValidator,
                           ),
                           SizedBox(height: AppSizes.h20),
                           if (state.status == RequestStatusEnum.eError)
@@ -148,26 +148,26 @@ class _LoginScreenState extends State<LoginScreen> {
   //   }
   // }
 
-  String? _passwordValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Password is required";
-    } else if (!Utility.isValidPassword(value)) {
-      if (!Utility.isContainSpecialCharacter(value)) {
-        return "Password must contain special character";
-      } else if (!Utility.isContainLowerCaseCharacter(value)) {
-        return "Password must contain lower case character";
-      } else if (!Utility.isContainUpperCaseCharacter(value)) {
-        return "Password must contain upper case character";
-      } else if (!Utility.isContainDigitCharacter(value)) {
-        return "Password must contain digit character";
-      } else if (!Utility.hasMinLength(value)) {
-        return "Password must be at least 8 characters long";
-      }
-      return "Invalid password";
-    } else {
-      return null;
-    }
-  }
+  // String? _passwordValidator(String? value) {
+  //   if (value == null || value.isEmpty) {
+  //     return "Password is required";
+  //   } else if (!Utility.isValidPassword(value)) {
+  //     if (!Utility.isContainSpecialCharacter(value)) {
+  //       return "Password must contain special character";
+  //     } else if (!Utility.isContainLowerCaseCharacter(value)) {
+  //       return "Password must contain lower case character";
+  //     } else if (!Utility.isContainUpperCaseCharacter(value)) {
+  //       return "Password must contain upper case character";
+  //     } else if (!Utility.isContainDigitCharacter(value)) {
+  //       return "Password must contain digit character";
+  //     } else if (!Utility.hasMinLength(value)) {
+  //       return "Password must be at least 8 characters long";
+  //     }
+  //     return "Invalid password";
+  //   } else {
+  //     return null;
+  //   }
+  // }
 
   // Future<void> _login() async {
   //   setState(() {
