@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:news_app/core/data_source/remote_data/api_configuration.dart';
 
+import '../local_data/user_repository.dart';
+
 abstract class BaseApiService{
   Future<dynamic> get({required String baseUrl , required String endPoint, Map<String, dynamic>? query});
   Future<dynamic> post({required String baseUrl , required String endPoint, Map<String, dynamic>? body , String? token});
-  Future<dynamic> getWithToken({required String baseUrl , required String endPoint, Map<String, dynamic>? body , String? token});
+  Future<dynamic> getWithToken({required String baseUrl , required String endPoint, Map<String, dynamic>? body});
 }
 
 
@@ -51,13 +53,14 @@ class ApiService extends BaseApiService{
   }
 
   @override
-  Future<dynamic> getWithToken({required String baseUrl, required String endPoint, Map<String, dynamic>? body, String? token}) async{
+  Future<dynamic> getWithToken({required String baseUrl, required String endPoint, Map<String, dynamic>? body}) async{
     Uri uri = Uri.https(baseUrl, endPoint);
 
     Map<String, String> headers = {
       "Content-Type": "application/json",
     };
 
+    final token = UserRepository().getCurrentUser()?.accessToken;
     if(token != null){
       headers["Authorization"] = "Bearer $token";
     }
