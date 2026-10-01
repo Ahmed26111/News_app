@@ -42,7 +42,7 @@ class TrendingNewsWidget extends StatelessWidget {
                     builder: (BuildContext context, RequestStatusEnum everythingRequestStatus) {
                       final HomeState state = context.read<HomeCubit>().state;
                       return switch (everythingRequestStatus) {
-                        RequestStatusEnum.eLoading => _buildTrendingNewsShimmer(),
+                        RequestStatusEnum.eLoading || RequestStatusEnum.eInitial => _buildTrendingNewsShimmer(),
                         RequestStatusEnum.eLoaded => SizedBox(
                           height: AppSizes.h140,
                           child: ListView.separated(

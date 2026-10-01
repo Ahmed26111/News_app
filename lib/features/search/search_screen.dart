@@ -34,7 +34,7 @@ class SearchScreen extends StatelessWidget {
                   ),
                   SizedBox(height: AppSizes.h10,),
                   switch(state.everythingRequestStatus){
-                    RequestStatusEnum.eLoading => _buildSearchResultShimmer(),
+                    RequestStatusEnum.eLoading || RequestStatusEnum.eInitial => _buildSearchResultShimmer(),
                     RequestStatusEnum.eLoaded => Expanded(
                       child: ListView.separated(
                         itemCount: state.newsEveryThingArticles.length,

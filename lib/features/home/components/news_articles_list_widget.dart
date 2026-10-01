@@ -17,7 +17,7 @@ class NewsArticlesListWidget extends StatelessWidget {
       builder: (BuildContext context, RequestStatusEnum topHeadLineRequestStatus) {
         final HomeState state = context.read<HomeCubit>().state;
         switch(topHeadLineRequestStatus){
-          case RequestStatusEnum.eLoading: return NewArticlesShimmer();
+          case RequestStatusEnum.eLoading || RequestStatusEnum.eInitial: return NewArticlesShimmer();
           case RequestStatusEnum.eLoaded: return Padding(
           padding: EdgeInsets.symmetric(vertical: AppSizes.ph16),
           child: ListView.builder(

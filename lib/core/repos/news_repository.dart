@@ -18,6 +18,7 @@ class NewsRepository extends BaseNewsRepository {
   @override
   Future<List<NewsArticleModel>> callEverythingEndPoint({String query = "bitcoin"}) async {
     Map<String, dynamic> data = await apiService.get(
+      baseUrl: ApiConfiguration.newsBaseUrl,
       endPoint: ApiConfiguration.everythingEndPoint,
       query: {"q": query, "pageSize": "20", "page": "1"},
     );
@@ -29,6 +30,7 @@ class NewsRepository extends BaseNewsRepository {
   @override
   Future<List<NewsArticleModel>> callHeadLineEndPoint({String? selectedCategory}) async {
     Map<String, dynamic> data = await apiService.get(
+      baseUrl: ApiConfiguration.newsBaseUrl,
       endPoint: ApiConfiguration.headLineEndPoint,
       query: {"country": "us", "category": selectedCategory, "pageSize": "20", "page": "1"},
     );

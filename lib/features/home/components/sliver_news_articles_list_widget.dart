@@ -17,7 +17,7 @@ class SliverNewsArticlesListWidget extends StatelessWidget {
       builder: (BuildContext context, RequestStatusEnum topHeadLineRequestStatus){
         final HomeState state = context.read<HomeCubit>().state;
         switch(topHeadLineRequestStatus){
-          case RequestStatusEnum.eLoading: return SliverNewArticlesShimmer();
+          case RequestStatusEnum.eLoading || RequestStatusEnum.eInitial: return SliverNewArticlesShimmer();
           case RequestStatusEnum.eLoaded: return SliverPadding(
           padding: EdgeInsets.symmetric(vertical: AppSizes.ph16),
           sliver: SliverList.builder(
