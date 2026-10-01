@@ -1,9 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:news_app/core/data_source/local_data/shared_preferences_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/core/enum/request_status_enum.dart';
+import 'package:news_app/features/authentication/cubit/auth_cubit.dart';
+import 'package:news_app/features/authentication/repo/auth_repo.dart';
 import '../../core/constants/app_sizes.dart';
-import '../../core/data_source/local_data/shared_preferences_keys.dart';
-import '../../core/data_source/local_data/user_repository.dart';
+import '../../core/data_source/remote_data/api_service.dart';
 import '../../core/utils/utility.dart';
 import '../../core/widgets/custom_text_form_field.dart';
 import '../main/main_screen.dart';
@@ -24,9 +26,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late final TapGestureRecognizer _signUpTapGestureRecognizer;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  bool isLoading = false;
-  String? errorMessage;
 
   @override
   void initState() {
@@ -54,81 +53,106 @@ class _RegisterScreenState extends State<RegisterScreen> {
             decoration: BoxDecoration(
               image: DecorationImage(image: AssetImage("assets/images/background_image.png"), fit: BoxFit.fill),
             ),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(child: Image.asset("assets/images/logo_image.png", height: AppSizes.h46)),
-                    SizedBox(height: AppSizes.h24),
-                    Text("Welcome to News", style: Theme.of(context).textTheme.titleMedium),
-                    SizedBox(height: AppSizes.h16),
-                    CustomTextFormField(
-                      controller: _usernameController,
-                      hintText: "e.g. Sarah Khalid",
-                      title: "Username",
-                      validator: _usernameValidator,
-                    ),
-                    SizedBox(height: AppSizes.h12),
-                    CustomTextFormField(
-                      controller: _emailController,
-                      hintText: "usama@gmail.com",
-                      title: "Email",
-                      validator: _emailValidator,
-                    ),
-                    SizedBox(height: AppSizes.h12),
-                    CustomTextFormField(
-                      controller: _passwordController,
-                      hintText: "*************",
-                      title: "Password",
-                      isObscureText: true,
-                      validator: _passwordValidator,
-                    ),
-                    SizedBox(height: AppSizes.h12),
-                    CustomTextFormField(
-                      controller: _confirmPasswordController,
-                      hintText: "*************",
-                      title: "Confirm Password",
-                      isObscureText: true,
-                      validator: _confirmPasswordValidator,
-                    ),
-                    SizedBox(height: AppSizes.h20),
-                    if (errorMessage != null)
-                      Padding(
-                        padding: EdgeInsets.all(AppSizes.pw12),
-                        child: Text(errorMessage!, style: TextStyle(color: Colors.red)),
-                      ),
-                    FilledButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          _register();
-                        }
-                      },
-                      child: isLoading
-                          ? CircularProgressIndicator(color: Theme.of(context).secondaryHeaderColor)
-                          : Text("Sign Up"),
-                    ),
-                    SizedBox(height: AppSizes.h24),
-                    Center(
-                      child: RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(text: "Have an account ?", style: Theme.of(context).textTheme.labelSmall),
-                            TextSpan(
-                              text: "  Sign In",
-                              style: Theme.of(
-                                context,
-                              ).textTheme.labelSmall?.copyWith(color: Theme.of(context).primaryColor),
-                              recognizer: _signUpTapGestureRecognizer,
-                            ),
-                          ],
+            child: BlocProvider<AuthCubit>(
+              create: (BuildContext context) => AuthCubit(AuthRepository(apiService: ApiService())),
+              child: BlocListener<AuthCubit, AuthState>(
+                listener: (context, state) {
+                  if (state.status == RequestStatusEnum.eLoaded) {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
+                  }
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: AppSizes.pw16),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(child: Image.asset("assets/images/logo_image.png", height: AppSizes.h46)),
+                        SizedBox(height: AppSizes.h24),
+                        Text("Welcome to News", style: Theme.of(context).textTheme.titleMedium),
+                        SizedBox(height: AppSizes.h16),
+                        CustomTextFormField(
+                          controller: _usernameController,
+                          hintText: "e.g. Sarah Khalid",
+                          title: "Username",
+                          validator: _usernameValidator,
                         ),
-                      ),
+                        SizedBox(height: AppSizes.h12),
+                        CustomTextFormField(
+                          controller: _emailController,
+                          hintText: "usama@gmail.com",
+                          title: "Email",
+                          validator: _emailValidator,
+                        ),
+                        SizedBox(height: AppSizes.h12),
+                        CustomTextFormField(
+                          controller: _passwordController,
+                          hintText: "*************",
+                          title: "Password",
+                          isObscureText: true,
+                          validator: _passwordValidator,
+                        ),
+                        SizedBox(height: AppSizes.h12),
+                        CustomTextFormField(
+                          controller: _confirmPasswordController,
+                          hintText: "*************",
+                          title: "Confirm Password",
+                          isObscureText: true,
+                          validator: _confirmPasswordValidator,
+                        ),
+                        SizedBox(height: AppSizes.h20),
+                        BlocBuilder<AuthCubit, AuthState>(
+                          builder: (context, state) {
+                            if (state.status == RequestStatusEnum.eError) {
+                              return Padding(
+                                padding: EdgeInsets.all(AppSizes.pw12),
+                                child: Text(state.errorMessage!, style: TextStyle(color: Colors.red)),
+                              );
+                            } else {
+                              return SizedBox();
+                            }
+                          },
+                        ),
+                        BlocBuilder<AuthCubit, AuthState>(
+                          builder: (context, state) {
+                            return FilledButton(
+                              onPressed: () {
+                                if (_formKey.currentState?.validate() ?? false) {
+                                  context.read<AuthCubit>().register(
+                                    name: _usernameController.text,
+                                    email: _emailController.text,
+                                    password: _passwordController.text,
+                                  );
+                                }
+                              },
+                              child: state.status == RequestStatusEnum.eLoading
+                                  ? CircularProgressIndicator(color: Theme.of(context).secondaryHeaderColor)
+                                  : Text("Sign Up"),
+                            );
+                          },
+                        ),
+                        SizedBox(height: AppSizes.h24),
+                        Center(
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(text: "Have an account ?", style: Theme.of(context).textTheme.labelSmall),
+                                TextSpan(
+                                  text: "  Sign In",
+                                  style: Theme.of(
+                                    context,
+                                  ).textTheme.labelSmall?.copyWith(color: Theme.of(context).primaryColor),
+                                  recognizer: _signUpTapGestureRecognizer,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -182,38 +206,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return "Username is required";
     } else {
       return null;
-    }
-  }
-
-  Future<void> _register() async {
-    setState(() {
-      isLoading = true;
-      errorMessage = null;
-    });
-    await Future.delayed(Duration(seconds: 1));
-
-    final String? error = await UserRepository().signUp(
-      name: _usernameController.text,
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
-
-    if (error != null) {
-      setState(() {
-        isLoading = false;
-        errorMessage = error;
-      });
-    } else {
-      await SharedPreferencesManager().setBool(SharedPreferencesKeys.loginCompleted, true);
-
-      setState(() {
-        isLoading = false;
-        errorMessage = null;
-      });
-
-      if (context.mounted) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainScreen()));
-      }
     }
   }
 }
