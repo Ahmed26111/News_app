@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:news_app/core/data_source/local_data/user_repository.dart';
 import 'package:news_app/core/data_source/remote_data/api_service.dart';
 
@@ -23,11 +21,9 @@ class AuthRepository {
 
       await UserRepository().updateUser(model);
 
-      log(model.toString());
 
       return model;
     } catch (e) {
-      log(e.toString());
       rethrow;
     }
   }
