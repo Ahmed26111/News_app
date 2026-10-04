@@ -73,6 +73,8 @@ class UserModel {
     String? password,
     String? country,
     String? image,
+    String? accessToken,
+    String? refreshToken,
   }) {
     return UserModel(
       name: name ?? this.name,
@@ -80,6 +82,8 @@ class UserModel {
       password: password ?? this.password,
       country: country ?? this.country,
       image: image ?? this.image,
+      accessToken: accessToken ?? this.accessToken,
+      refreshToken: refreshToken ?? this.refreshToken,
     );
   }
 

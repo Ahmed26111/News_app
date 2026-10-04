@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/core/theme/light_theme.dart';
+import 'package:news_app/main.dart';
 import 'core/cubit/bookmark_cubit.dart';
 import 'features/splash/splash_screen.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         return BlocProvider<BookmarkCubit>(
           create: (BuildContext context) => BookmarkCubit(),
           child: MaterialApp(
+            navigatorKey: navigationKey,
             debugShowCheckedModeBanner: false,
             theme: lightTheme(context),
             home: const SplashScreen(),

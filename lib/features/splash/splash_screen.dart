@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:news_app/features/onboarding/onboarding_screen.dart';
 import '../../core/data_source/local_data/shared_preferences_keys.dart';
 import '../../core/data_source/local_data/shared_preferences_manager.dart';
+import '../../core/data_source/local_data/user_repository.dart';
 import '../authentication/login_screen.dart';
 import '../main/main_screen.dart';
 
@@ -29,12 +30,14 @@ class _SplashScreenState extends State<SplashScreen> {
           ) ??
           false;
 
+      final bool isTokenExpired = UserRepository().getCurrentUser()?.accessToken == null;
+
       if (!isOnBoardingCompleted) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => OnboardingScreen()),
         );
-      } else if (!isLoginCompleted) {
+      } else if (!isLoginCompleted && isTokenExpired) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),

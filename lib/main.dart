@@ -6,6 +6,8 @@ import 'core/data_source/local_data/bookmark_repository.dart';
 import 'core/data_source/remote_data/dio_example.dart';
 import 'my_app.dart';
 
+final GlobalKey<NavigatorState> navigationKey = GlobalKey<NavigatorState>();
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesManager().init();

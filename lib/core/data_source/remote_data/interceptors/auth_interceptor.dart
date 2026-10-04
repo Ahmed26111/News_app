@@ -1,5 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:news_app/core/data_source/local_data/shared_preferences_keys.dart';
+import 'package:news_app/core/data_source/local_data/shared_preferences_manager.dart';
 
+import '../../../../features/authentication/login_screen.dart';
+import '../../../../main.dart';
 import '../../local_data/user_repository.dart';
 
 
@@ -15,6 +20,28 @@ class AuthInterceptor extends Interceptor {
     handler.next(options);
   }
 
+
   @override
-  void onResponse(Response<dynamic> response, ResponseInterceptorHandler handler) {}
-}
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    if (err.response?.statusCode == 401) {
+      //? UnAuthorized
+      final BuildContext context = navigationKey.currentContext!;
+
+      UserRepository().removeCurrentUser();
+      SharedPreferencesManager().setBool(SharedPreferencesKeys.loginCompleted, false);
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return LoginScreen();
+          },
+        ),
+        (route) => false,
+      );
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Session Expire, Please Login Again")));
+    }
+
+    handler.next(err);
+  }}

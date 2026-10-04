@@ -9,6 +9,7 @@ import 'package:news_app/core/widgets/custom_svg_picture_asset.dart';
 import 'package:news_app/features/profile/cubit/profile_cubit.dart';
 import '../../core/constants/app_sizes.dart';
 import '../../core/data_source/local_data/shared_preferences_keys.dart';
+import '../../core/data_source/local_data/user_repository.dart';
 import '../authentication/login_screen.dart';
 import 'components/personal_info_modal_bottom_sheet.dart';
 
@@ -155,6 +156,7 @@ class ProfileScreen extends StatelessWidget {
                       title: "Logout",
                       onTap: () async {
                         await SharedPreferencesManager().setBool(SharedPreferencesKeys.loginCompleted, false);
+                        await UserRepository().removeCurrentUser();
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
                       },
                       isLastTile: true,
