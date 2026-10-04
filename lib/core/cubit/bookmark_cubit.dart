@@ -7,7 +7,9 @@ import '../model/news_article_model.dart';
 part 'bookmark_state.dart';
 
 class BookmarkCubit extends Cubit<BookmarkState> {
-  BookmarkCubit() : super(BookmarkState());
+  BookmarkCubit() : super(BookmarkState()) {
+    loadBookmarks();
+  }
 
   void loadBookmarks() {
      emit(state.copyWith(bookmarkedArticles: BookmarkRepository().getSavedBookmarks()));
@@ -20,5 +22,10 @@ class BookmarkCubit extends Cubit<BookmarkState> {
 
   bool isBookmarked(String url) {
     return BookmarkRepository().isBookmarked(url);
+  }
+
+  Future<void> clearBookmarks() async {
+    await BookmarkRepository().clearBookmarks();
+    emit(state.copyWith(bookmarkedArticles: []));
   }
 }

@@ -16,7 +16,7 @@ class AuthDioConfig {
       ),
     );
 
-    dio.interceptors.addAll([LoggingInterceptor(), AuthInterceptor()]);
+    dio.interceptors.addAll([AuthInterceptor() , LoggingInterceptor()]);
 
     return dio;
   }

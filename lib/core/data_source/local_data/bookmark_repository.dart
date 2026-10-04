@@ -41,4 +41,8 @@ class BookmarkRepository {
       return true;
     }
   }
+
+  Future<void> clearBookmarks() async {
+    await _bookmarksBox.clear();
+  }
 }

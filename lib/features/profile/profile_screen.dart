@@ -8,6 +8,7 @@ import 'package:news_app/core/theme/light_color_constant.dart';
 import 'package:news_app/core/widgets/custom_svg_picture_asset.dart';
 import 'package:news_app/features/profile/cubit/profile_cubit.dart';
 import '../../core/constants/app_sizes.dart';
+import '../../core/cubit/bookmark_cubit.dart';
 import '../../core/data_source/local_data/shared_preferences_keys.dart';
 import '../../core/data_source/local_data/user_repository.dart';
 import '../authentication/login_screen.dart';
@@ -157,7 +158,10 @@ class ProfileScreen extends StatelessWidget {
                       onTap: () async {
                         await SharedPreferencesManager().setBool(SharedPreferencesKeys.loginCompleted, false);
                         await UserRepository().removeCurrentUser();
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                        await context.read<BookmarkCubit>().clearBookmarks();
+                        if (context.mounted) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                        }
                       },
                       isLastTile: true,
                     ),

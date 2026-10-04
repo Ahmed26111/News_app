@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_app/core/cubit/bookmark_cubit.dart';
+import 'package:news_app/core/data_source/local_data/bookmark_repository.dart';
 import 'package:news_app/core/data_source/local_data/shared_preferences_keys.dart';
 import 'package:news_app/core/data_source/local_data/shared_preferences_manager.dart';
 
@@ -22,12 +25,16 @@ class AuthInterceptor extends Interceptor {
 
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
       //? UnAuthorized
       final BuildContext context = navigationKey.currentContext!;
 
       UserRepository().removeCurrentUser();
+      await BookmarkRepository().clearBookmarks();
+      try {
+        context.read<BookmarkCubit>().clearBookmarks();
+      } catch (_) {}
       SharedPreferencesManager().setBool(SharedPreferencesKeys.loginCompleted, false);
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
