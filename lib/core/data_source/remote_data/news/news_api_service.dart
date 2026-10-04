@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:news_app/core/data_source/remote_data/news/news_api_configuration.dart';
 import 'news_dio_config.dart';
 
 
@@ -13,10 +12,7 @@ class NewsApiService extends NewsBaseApiService{
   @override
   Future<dynamic> get({required String endPoint, Map<String, dynamic>? query}) async {
     try{
-      final response = await dio.get(endPoint , queryParameters:{
-        "apiKey": NewsApiConfiguration.apiKey,
-        ...?query,
-      });
+      final response = await dio.get(endPoint , queryParameters: query);
       return response.data as Map<String, dynamic>;
     }
     on DioException catch(e){
