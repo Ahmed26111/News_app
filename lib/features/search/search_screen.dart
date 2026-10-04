@@ -6,7 +6,7 @@ import 'package:news_app/core/widgets/custom_shimmer_from_colors.dart';
 import 'package:news_app/core/widgets/custom_text_field.dart';
 import 'package:news_app/features/search/cubit/search_cubit.dart';
 import '../../core/constants/app_sizes.dart';
-import '../../core/data_source/remote_data/api_service.dart';
+import '../../core/data_source/remote_data/news/news_api_service.dart';
 import '../../core/repos/news_repository.dart';
 import '../details/news_details_screen.dart';
 
@@ -18,7 +18,7 @@ class SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Search")),
       body: BlocProvider<SearchCubit>(
-        create: (_) => SearchCubit(NewsRepository(apiService: ApiService())),
+        create: (_) => SearchCubit(NewsRepository(apiService: NewsApiService())),
         child: BlocBuilder<SearchCubit , SearchState>(
           builder: (BuildContext context, state) {
             final controller = context.read<SearchCubit>();

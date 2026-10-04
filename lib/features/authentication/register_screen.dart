@@ -5,7 +5,7 @@ import 'package:news_app/core/enum/request_status_enum.dart';
 import 'package:news_app/features/authentication/cubit/auth_cubit.dart';
 import 'package:news_app/features/authentication/repo/auth_repo.dart';
 import '../../core/constants/app_sizes.dart';
-import '../../core/data_source/remote_data/api_service.dart';
+import '../../core/data_source/remote_data/auth/auth_api_service.dart';
 import '../../core/utils/utility.dart';
 import '../../core/widgets/custom_text_form_field.dart';
 import '../main/main_screen.dart';
@@ -54,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               image: DecorationImage(image: AssetImage("assets/images/background_image.png"), fit: BoxFit.fill),
             ),
             child: BlocProvider<AuthCubit>(
-              create: (BuildContext context) => AuthCubit(AuthRepository(apiService: ApiService())),
+              create: (BuildContext context) => AuthCubit(AuthRepository(apiService: AuthApiService())),
               child: BlocListener<AuthCubit, AuthState>(
                 listener: (context, state) {
                   if (state.status == RequestStatusEnum.eLoaded) {

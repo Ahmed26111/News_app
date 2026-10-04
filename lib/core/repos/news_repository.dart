@@ -1,5 +1,7 @@
-import '../../../core/data_source/remote_data/api_configuration.dart';
-import '../../../core/data_source/remote_data/api_service.dart';
+
+import 'package:news_app/core/data_source/remote_data/news/news_api_configuration.dart';
+
+import '../data_source/remote_data/news/news_api_service.dart';
 import '../model/news_article_model.dart';
 
 abstract class BaseNewsRepository {
@@ -13,13 +15,12 @@ abstract class BaseNewsRepository {
 class NewsRepository extends BaseNewsRepository {
   NewsRepository({required this.apiService});
 
-  final BaseApiService apiService;
+  final NewsBaseApiService apiService;
 
   @override
   Future<List<NewsArticleModel>> callEverythingEndPoint({String query = "bitcoin"}) async {
     Map<String, dynamic> data = await apiService.get(
-      baseUrl: ApiConfiguration.newsBaseUrl,
-      endPoint: ApiConfiguration.everythingEndPoint,
+      endPoint: NewsApiConfiguration.everythingEndPoint,
       query: {"q": query, "pageSize": "20", "page": "1"},
     );
     return (data["articles"] as List<dynamic>)
@@ -30,8 +31,7 @@ class NewsRepository extends BaseNewsRepository {
   @override
   Future<List<NewsArticleModel>> callHeadLineEndPoint({String? selectedCategory}) async {
     Map<String, dynamic> data = await apiService.get(
-      baseUrl: ApiConfiguration.newsBaseUrl,
-      endPoint: ApiConfiguration.headLineEndPoint,
+      endPoint: NewsApiConfiguration.headLineEndPoint,
       query: {"country": "us", "category": selectedCategory, "pageSize": "20", "page": "1"},
     );
     return (data["articles"] as List<dynamic>)
